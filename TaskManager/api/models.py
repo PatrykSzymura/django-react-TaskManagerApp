@@ -13,34 +13,41 @@ class Priorities(models.Model):
     priority_name = models.CharField(db_column='Priority_Name', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
     color_number = models.IntegerField(db_column='Color_Number', blank=True, null=True)  # Field name made lowercase.
 
+    def __str__(self) -> str:
+        return self.priority_name
+
     class Meta:
         managed = False
         db_table = 'Priorities'
-
-
-class Projekty(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    project_name = models.CharField(db_column='Project_Name', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
-    team_id = models.IntegerField(db_column='Team_ID', blank=True, null=True)  # Field name made lowercase.
-    priority = models.ForeignKey(Priorities, models.DO_NOTHING, db_column='Priority_ID', blank=True, null=True)  # Field name made lowercase.
-    status = models.ForeignKey('Statuses', models.DO_NOTHING, db_column='Status_ID', blank=True, null=True)  # Field name made lowercase.
-    date_start = models.DateField(db_column='Date_Start', blank=True, null=True)  # Field name made lowercase.
-    date_end = models.DateField(db_column='Date_End', blank=True, null=True)  # Field name made lowercase.
-    description = models.CharField(db_column='Description', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'Projekty'
-
 
 class Statuses(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     status_name = models.CharField(db_column='Status_Name', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
     color_nr = models.IntegerField(db_column='Color_Nr', blank=True, null=True)  # Field name made lowercase.
 
+    def __str__(self) -> str:
+        return self.status_name
+
     class Meta:
         managed = False
         db_table = 'Statuses'
+
+class Projekty(models.Model):
+    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
+    project_name = models.CharField(db_column='Project_Name', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
+    team_id = models.IntegerField(db_column='Team_ID', blank=True, null=True)  # Field name made lowercase.
+    priority = models.ForeignKey(Priorities, models.DO_NOTHING, db_column='Priority_ID', blank=True, null=True)  # Field name made lowercase.
+    status = models.ForeignKey(Statuses, models.DO_NOTHING, db_column='Status_ID', blank=True, null=True)  # Field name made lowercase.
+    date_start = models.DateField(db_column='Date_Start', blank=True, null=True)  # Field name made lowercase.
+    date_end = models.DateField(db_column='Date_End', blank=True, null=True)  # Field name made lowercase.
+    description = models.CharField(db_column='Description', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
+
+    #def __str__(self) -> str:
+    #    return self.project_name
+
+    class Meta:
+        managed = False
+        db_table = 'Projekty'
 
 
 class Tasks(models.Model):
@@ -52,6 +59,9 @@ class Tasks(models.Model):
     date_start = models.DateField(db_column='Date_Start', blank=True, null=True)  # Field name made lowercase.
     date_end = models.DateField(db_column='Date_End', blank=True, null=True)  # Field name made lowercase.
     description = models.CharField(db_column='Description', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
+
+    def __str__(self) -> str:
+        return self.task_name
 
     class Meta:
         managed = False

@@ -49,7 +49,6 @@ def getRoutes(request):
 
     return Response(routes)
 
-
 @api_view(['GET'])
 def getProjects(request):
     projects = models.Projekty.objects.all()
