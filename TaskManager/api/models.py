@@ -42,8 +42,8 @@ class Projekty(models.Model):
     date_end = models.DateField(db_column='Date_End', blank=True, null=True)  # Field name made lowercase.
     description = models.CharField(db_column='Description', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
 
-    #def __str__(self) -> str:
-    #    return self.project_name
+    def __str__(self) -> str:
+       return self.project_name
 
     class Meta:
         managed = False
