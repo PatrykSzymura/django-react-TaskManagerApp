@@ -15,11 +15,21 @@ const Projects = () => {
     }
 
     return (
-        <div>
-            <h2>Project List</h2>
-            {projects.map((project, index) => (
-                <h3 key={index}>{project['project_name']}</h3>
-            ))}
+        <div className="bg-secondary">
+            <h2 className="text-5xl font-bold">Project List</h2>
+
+                {projects.map((project, index) => (
+                    <div key={index} className="card w-96 bg-base-100 shadow-xl">
+                        <div className=" card-body">
+                            <div className="card-title" >{project['project_name']}</div>
+                            {project['description']}
+                            <div className="card-actions justify-end">
+                                <div className="badge badge-outline">Fashion</div> 
+                                <div className="badge badge-outline">Products</div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
         </div>
     )
 }
