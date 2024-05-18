@@ -17,19 +17,22 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class StatusSerializer(ModelSerializer):
     class Meta:
         model = models.Statuses
-        fields = ['status_name', 'color_nr']
+        fields = '__all__'
 
 class PrioritySerializer(ModelSerializer):
     class Meta:
         model = models.Priorities
-        fields = ['priority_name', 'color_number']
+        fields = '__all__'
 
 class ProjectsSerializer(ModelSerializer):
-    #
     class Meta:
         model = models.Projekty
-        fields = '__all__'
+        fields = ["id","project_name","team_id","description","status","priority","date_start","date_end"]
     status = StatusSerializer(read_only = True)
     priority = PrioritySerializer(read_only = True)
 
-    
+class TaskSerializer(ModelSerializer):
+    class Meta:
+        model = models.Tasks
+        fields = ['id','task_name','project','worker','status','date_start','date_end']
+    status = StatusSerializer(read_only = True)
