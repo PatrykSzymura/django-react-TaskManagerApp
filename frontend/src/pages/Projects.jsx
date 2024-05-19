@@ -1,18 +1,23 @@
 import React , {useState, useEffect} from "react";
+import axios from 'axios';
 
 const Projects = () => {
     let [projects, setProjects] = useState([]);
 
     useEffect(() => {
-        getProjects()
-    },[]) 
-
+        getProjects();
+    }, []);
+    
     let getProjects = async () => {
-       let response = await fetch('http://127.0.0.1:8000/api/projects/')
-       let data = await response.json()
-       console.log('Data:',data)
-       setProjects(data)
-    }
+        try {
+            let response = await axios.get('http://127.0.0.1:8000/api/get/projects');
+            let data = response.data;
+            console.log('Data:', data);
+            setProjects(data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
     return (
         <div className="bg-secondary">
