@@ -94,6 +94,18 @@ def getRoutes(request):
     return Response(routes)
 
 @api_view(['GET'])
+def getWorkers(request):
+    model = mod.Accountteams.objects.all()
+    serializer = ser.Acc_to_TeamSerializer(model, many = True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getTeams(request):
+    model = mod.Teams.objects.all()
+    serializer = ser.TeamSerializer(model, many = True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
 def getStatus(request):
     model = mod.Statuses.objects.all()
     serializer = ser.StatusSerializer(model, many = True)

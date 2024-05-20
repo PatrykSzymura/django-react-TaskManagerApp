@@ -8,17 +8,49 @@
 from django.db import models
 
 
+class Accountteams(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    accountid = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='AccountID')  # Field name made lowercase.
+    teamid = models.ForeignKey('Teams', models.DO_NOTHING, db_column='TeamID')  # Field name made lowercase.
+
+    def __str__(self) -> str:
+        return f"{self.accountid} is in {self.teamid}"
+
+    class Meta:
+        managed = False
+        db_table = 'AccountTeams'
+
+
 class Priorities(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     priority_name = models.CharField(db_column='Priority_Name', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
     color_number = models.IntegerField(db_column='Color_Number', blank=True, null=True)  # Field name made lowercase.
-
+    
     def __str__(self) -> str:
         return self.priority_name
-
+    
     class Meta:
         managed = False
         db_table = 'Priorities'
+
+
+class Projects(models.Model):
+    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
+    project_name = models.CharField(db_column='Project_Name', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
+    team = models.ForeignKey('Teams', models.DO_NOTHING, db_column='Team_ID', blank=True, null=True)  # Field name made lowercase.
+    priority = models.ForeignKey(Priorities, models.DO_NOTHING, db_column='Priority_ID', blank=True, null=True)  # Field name made lowercase.
+    status = models.ForeignKey('Statuses', models.DO_NOTHING, db_column='Status_ID', blank=True, null=True)  # Field name made lowercase.
+    date_start = models.DateField(db_column='Date_Start', blank=True, null=True)  # Field name made lowercase.
+    date_end = models.DateField(db_column='Date_End', blank=True, null=True)  # Field name made lowercase.
+    description = models.CharField(db_column='Description', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
+
+    def __str__(self) -> str:
+        return self.project_name
+
+    class Meta:
+        managed = False
+        db_table = 'Projects'
+
 
 class Statuses(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
@@ -27,32 +59,15 @@ class Statuses(models.Model):
 
     def __str__(self) -> str:
         return self.status_name
-
+    
     class Meta:
         managed = False
         db_table = 'Statuses'
 
-class Projekty(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    project_name = models.CharField(db_column='Project_Name', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
-    team_id = models.IntegerField(db_column='Team_ID', blank=True, null=True)  # Field name made lowercase.
-    priority = models.ForeignKey(Priorities, models.DO_NOTHING, db_column='Priority_ID', blank=True, null=True)  # Field name made lowercase.
-    status = models.ForeignKey(Statuses, models.DO_NOTHING, db_column='Status_ID', blank=True, null=True)  # Field name made lowercase.
-    date_start = models.DateField(db_column='Date_Start', blank=True, null=True)  # Field name made lowercase.
-    date_end = models.DateField(db_column='Date_End', blank=True, null=True)  # Field name made lowercase.
-    description = models.CharField(db_column='Description', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
-
-    def __str__(self) -> str:
-       return self.project_name
-
-    class Meta:
-        managed = False
-        db_table = 'Projekty'
-
 
 class Tasks(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    project = models.ForeignKey(Projekty, models.DO_NOTHING, db_column='Project_ID', blank=True, null=True)  # Field name made lowercase.
+    project = models.ForeignKey(Projects, models.DO_NOTHING, db_column='Project_ID', blank=True, null=True)  # Field name made lowercase.
     task_name = models.CharField(db_column='Task_Name', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
     status = models.ForeignKey(Statuses, models.DO_NOTHING, db_column='Status_ID', blank=True, null=True)  # Field name made lowercase.
     worker = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='Worker_ID', blank=True, null=True)  # Field name made lowercase.
@@ -61,7 +76,7 @@ class Tasks(models.Model):
     description = models.CharField(db_column='Description', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
 
     def __str__(self) -> str:
-        return self.task_name
+        return f"{self.task_name} of {self.project}"
 
     class Meta:
         managed = False
@@ -69,9 +84,11 @@ class Tasks(models.Model):
 
 
 class Teams(models.Model):
-    id = models.OneToOneField(Projekty, models.DO_NOTHING, db_column='ID', primary_key=True)  # Field name made lowercase.
-    team_id = models.IntegerField(db_column='Team_ID', blank=True, null=True)  # Field name made lowercase.
-    worker = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='Worker_ID', blank=True, null=True)  # Field name made lowercase.
+    teamid = models.AutoField(db_column='TeamID', primary_key=True)  # Field name made lowercase.
+    teamname = models.CharField(db_column='TeamName', max_length=100, db_collation='Polish_CI_AS')  # Field name made lowercase.
+
+    def __str__(self) -> str:
+        return f"{self.teamid[0:5]}|{self.teamname[0:30]}|"
 
     class Meta:
         managed = False
@@ -120,6 +137,9 @@ class AuthUser(models.Model):
     is_active = models.BooleanField()
     date_joined = models.DateTimeField()
 
+    def __str__(self) -> str:
+        return self.username
+    
     class Meta:
         managed = False
         db_table = 'auth_user'

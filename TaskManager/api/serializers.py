@@ -1,7 +1,7 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer as MS
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from . import models
+from . import models as m
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -14,25 +14,35 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         return token
 
-class StatusSerializer(ModelSerializer):
+class StatusSerializer(MS):
     class Meta:
-        model = models.Statuses
+        model = m.Statuses
         fields = '__all__'
 
-class PrioritySerializer(ModelSerializer):
+class TeamSerializer(MS):
     class Meta:
-        model = models.Priorities
+        model = m.Teams
         fields = '__all__'
 
-class ProjectsSerializer(ModelSerializer):
+class Acc_to_TeamSerializer(MS):
     class Meta:
-        model = models.Projekty
+        model = m.Accountteams
+        fields = '__all__'
+
+class PrioritySerializer(MS):
+    class Meta:
+        model = m.Priorities
+        fields = '__all__'
+
+class ProjectsSerializer(MS):
+    class Meta:
+        model = m.Projects
         fields = ["id","project_name","team_id","description","status","priority","date_start","date_end"]
     status = StatusSerializer(read_only = True)
     priority = PrioritySerializer(read_only = True)
 
-class TaskSerializer(ModelSerializer):
+class TaskSerializer(MS):
     class Meta:
-        model = models.Tasks
+        model = m.Tasks
         fields = ['id','task_name','project','worker','status','date_start','date_end']
     status = StatusSerializer(read_only = True)

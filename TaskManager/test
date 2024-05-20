@@ -1,0 +1,45 @@
+USE [TaskManager]
+GO
+
+CREATE TABLE [dbo].[AccountTeams](
+    [Id] [int] NOT NULL IDENTITY(0,1) PRIMARY KEY
+	[AccountID] [int] NOT NULL,
+	[TeamID] [int] NOT NULL,
+)
+GO
+
+/****** Object:  Table [dbo].[TeamProjects]    Script Date: 19.05.2024 23:20:30 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TeamProjects](
+	[TeamID] [int] NOT NULL,
+	[ProjectID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[TeamID] ASC,
+	[ProjectID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Teams]    Script Date: 19.05.2024 23:20:30 ******/
+CREATE TABLE [dbo].[Teams](
+	[TeamID] [int] IDENTITY(1,1) NOT NULL,
+	[TeamName] [nvarchar](100) NOT NULL,
+)
+GO
+
+/****** Object:  Table [dbo].[Projekty]    Script Date: 19.05.2024 23:20:30 ******/
+
+CREATE TABLE [dbo].[Projects](
+	[ID] [int] IDENTITY(0,1) NOT NULL PRIMARY KEY,
+	[Project_Name] [nvarchar](255) NULL,
+    [Team_ID] [int] NULL,
+	[Priority_ID] [int] NULL,
+	[Status_ID] [int] NULL,
+	[Date_Start] [date] NULL,
+	[Date_End] [date] NULL,
+	[Description] [nvarchar](255) NULL,
+)
+GO
