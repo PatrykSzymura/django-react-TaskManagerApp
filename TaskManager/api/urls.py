@@ -27,4 +27,6 @@ urlpatterns = [
     path('update/project/<str:projectId>', views.updateProject, name='updateProject'), # recives data for updating of project
     path('update/task/<str:taskId>', views.updateTask, name='updateTask'), # recives data for updating of task
 
+    path('test',views.getWorkers,name = 'getTeams'),
+
 ]
