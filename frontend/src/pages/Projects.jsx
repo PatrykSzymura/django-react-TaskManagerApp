@@ -20,9 +20,7 @@ const Projects = () => {
     };
 
     return (
-        <div className="bg-secondary">
-            <h2 className="text-5xl font-bold">Project List</h2>
-
+        <div className="bg">
                 {projects.map((project, index) => (
                     <div key={index} className="card w-96 bg-base-100 shadow-xl">
                         <div className=" card-body">

@@ -1,26 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer components{
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .papaj{
+    margin: 5px;
+  }
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+  .btn-orange{
+    @apply btn bg-orange;
+  }
+  .strokeme {
+    color: black;
+    background-color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  }
+  .strokeme2 {
+    color: #fff;
+    text-shadow: #000 0px 0px 1px;
+    -webkit-font-smoothing: antialiased;
 }
 
-.papaj{
-  margin: 5px;
-}
+  .bg-meme{
+    background-image: url('https://64.media.tumblr.com/8d4a3394badc3853e774e4b9cda31896/99bd34a6b7b08fd5-d9/s1280x1920/746f9c42815b227234aab8e1abfa6f50f0778e66.gif');
+  }
 
-div{
-  margin: 5px;
-  padding-bottom: 2px;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }
