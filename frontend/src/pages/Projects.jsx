@@ -1,5 +1,27 @@
 import React , {useState, useEffect} from "react";
+import Modal from "../components/Modal"
 import axios from 'axios';
+
+const AddProject = () => {
+    return (
+      
+        <div className='card w-96 bg-base-300 shadow-xl skeleton'>
+          <div className='card-body'>
+            <h2 className='card-title badge badge-lg w-72 h-6'></h2>
+            <p className='badge badge-lg w-24 h-6'></p>
+            <p className='badge badge-lg w-48 h-6'></p>
+            <p className='badge badge-lg w-48 h-6'></p>
+            <span className='absolute font-bold text-4xl m-auto  top-20 left-0 right-0'>
+              NEW
+            </span>
+            <div className='card-actions '>
+              <span className={`badge badge-lg  text-gray-700 w-24`}></span>
+              <span className={`badge badge-lg  text-gray-700 w-24`}> </span>
+            </div>
+          </div>
+        </div>
+    );
+  };
 
 const Projects = () => {
     let [projects, setProjects] = useState([]);
@@ -20,9 +42,9 @@ const Projects = () => {
     };
 
     return (
-        <div className="bg">
+        <div className="bg-base-100 p-2 grid grid-cols-4">
                 {projects.map((project, index) => (
-                    <div key={index} className="card w-96 bg-base-100 shadow-xl">
+                    <div key={index} className="card w-96 bg-base-300 shadow-xl">
                         <div className=" card-body">
                             <div className="card-title" >{project['project_name']}</div>
                             {project['description']}
@@ -33,6 +55,12 @@ const Projects = () => {
                         </div>
                     </div>
                 ))}
+            <Modal
+              element={<h3>Form to add</h3>}
+              btn_Name={<AddProject />}
+              modal_ID={"add project"}
+            />
+            
         </div>
     )
 }
