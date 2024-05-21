@@ -88,7 +88,7 @@ class Teams(models.Model):
     teamname = models.CharField(db_column='TeamName', max_length=100, db_collation='Polish_CI_AS')  # Field name made lowercase.
 
     def __str__(self) -> str:
-        return f"{self.teamid[0:5]}|{self.teamname[0:30]}|"
+        return f"{self.teamid}|{self.teamname[0:30]}|"
 
     class Meta:
         managed = False
