@@ -1,10 +1,8 @@
+//import React , {useState, useEffect} from "react";
 import './App.css';
-import Projects from './pages/Projects';
-import PrivateRoutes from './utils/PrivateRoutes';
-import { LoginPage, RegisPage } from './pages/LogReg';
-import Header from './components/Header';
-import Home from './pages/Home';
-import Priorities from './pages/Priorities';
+import Projects from'./pages/Projects'
+import PrivateRoutes from './utils/PrivateRoutes'
+import { LoginPage , RegisPage} from "./pages/LogReg";
 import {
   BrowserRouter as Router,
   Routes,
@@ -12,34 +10,28 @@ import {
   Navigate,
   Link,
   Outlet,
-} from 'react-router-dom';
+} from "react-router-dom";
+//import { Test } from './components/components';
 
 function App() {
+  
   return (
-    <div className="App">
+    <div className="App bg-secondary">
       <Router>
         <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/Priorities" element={<Priorities />} />
+          <Route element={<LoginPage/>} path='/login'/>
+          <Route element={<RegisPage/>} path='/register'/>
+          
 
-          <Route element={<HeaderWrapper />}>
-            <Route element={<PrivateRoutes />}>
-              <Route path="/projects" element={<Projects />} />
-            </Route>
+          <Route element={<PrivateRoutes/>}>
+          <Route path='/projects' element={<Projects/>} />
           </Route>
-          <Route path="*" element={<Navigate to="/login" />} />
+          
+          <Route path='*' element={<Navigate to='/login' />} />
         </Routes>
       </Router>
     </div>
   );
 }
-
-const HeaderWrapper = () => (
-  <>
-    <Header />
-    <Outlet />
-  </>
-);
 
 export default App;
