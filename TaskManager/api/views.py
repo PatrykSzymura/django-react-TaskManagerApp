@@ -126,7 +126,7 @@ def getPriority(request):
 
 @api_view(['GET'])
 def getProjects(request):
-    projects = mod.Projekty.objects.all()
+    projects = mod.Projects.objects.all()
     serializer = ser.ProjectsSerializer(projects, many = True)
     return Response(serializer.data)
 
