@@ -5,6 +5,8 @@ import Header from './components/Header';
 import PrivateRoutes from './utils/PrivateRoutes'
 import { LoginPage , RegisPage} from "./pages/LogReg";
 import Overview from "./pages/Overview"
+import Teams from './pages/Teams';
+import CreateTeam from './pages/CreateTeam';
 import {
   BrowserRouter as Router,
   Routes,
@@ -31,6 +33,9 @@ function App() {
 
           <Route element={<PrivateRoutes/>}>
           <Route path='/projects' element={<Projects/>} />
+          <Route path='/Teams' element={<Teams/>} />
+          <Route path='/CreateTeam' element={<CreateTeam/>} />
+
           </Route>
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
