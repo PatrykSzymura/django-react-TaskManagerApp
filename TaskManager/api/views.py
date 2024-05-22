@@ -37,6 +37,25 @@ def getRoutes(request):
             "description": "Refreshes an existing token pair"
         },
         {
+            "path": 'get/statuses', 
+            "view" : "getStatus", 
+            "method": "GET",
+            "description" : "returns Array of Statuses"
+        },
+        {
+            'path' : 'get/accountlist',
+            'view' : "getAccountList",
+            "method": "GET",
+            'description' : 'returns Array of accounts',
+    
+        },
+        {
+            "path": 'get/teams',
+            "views" : "getWorkers",
+            "method": "GET",
+            "description" : "return information about team and worker",
+        },
+        {
             "path": "api/get/statuses",
             "view": "getStatuses",
             "method": "GET",
@@ -95,7 +114,7 @@ def getRoutes(request):
             "view": "updateTask",
             "method": "PUT",
             "description": "Updates an existing task with the provided data"
-        }
+        },
     ]
 
     return Response(routes)
@@ -204,4 +223,11 @@ def getTeamWorkers(request,teamId):
     data = mod.Teams.objects.filter(teamid = teamId)
     print(data)
     seri = ser.TeamSerializer(data, many = True)
+    return Response(seri.data)
+
+@api_view(['GET'])
+def getAccountList(request):
+    data = mod.AuthUser.objects.filter()
+    #print(data)
+    seri = ser.UserBaseInfoSerializer(data, many = True)
     return Response(seri.data)

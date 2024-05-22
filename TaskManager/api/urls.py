@@ -14,6 +14,8 @@ urlpatterns = [
 
     # GET links  -> returns array of data or specific objects
     path('get/statuses', views.getStatus, name='getStatuses'), # returns Array of Statuses
+    path('get/accountlist', views.getAccountList,name= "getAccountList") # returns Array of accounts
+    
     path('get/teams',views.getWorkers,name = 'getTeams'),# return information about team and worker
     path('get/teamslists',views.getTeamList,name = 'getTeamsList'),#return Array of teams
     path('get/priorities', views.getPriority, name='getpriorities'), # returns Array of Priorities
@@ -29,7 +31,5 @@ urlpatterns = [
     # PUT links -> recives data for updating objects
     path('update/project/<str:projectId>', views.updateProject, name='updateProject'), # recives data for updating of project
     path('update/task/<str:taskId>', views.updateTask, name='updateTask'), # recives data for updating of task
-
-    
 
 ]
