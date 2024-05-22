@@ -15,6 +15,7 @@ import {
   Link,
   Outlet,
 } from 'react-router-dom';
+import Tester from './pages/Test';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Router>
         <Header/>
         <Routes>
+        <Route element={<Tester/>} path='/test'/>
           { sessionStorage.getItem('access_token') == null ? 
           <Route element={<Overview/>} path='/'/> 
           : 
