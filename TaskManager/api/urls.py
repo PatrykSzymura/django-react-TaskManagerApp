@@ -14,7 +14,7 @@ urlpatterns = [
 
     # GET links  -> returns array of data or specific objects
     path('get/statuses', views.getStatus, name='getStatuses'), # returns Array of Statuses
-    path('get/accountlist', views.getAccountList,name= "getAccountList") # returns Array of accounts
+    path('get/accountlist', views.getAccountList,name= "getAccountList"), # returns Array of accounts
     
     path('get/teams',views.getWorkers,name = 'getTeams'),# return information about team and worker
     path('get/teamslists',views.getTeamList,name = 'getTeamsList'),#return Array of teams
