@@ -103,6 +103,7 @@ def getRoutes(request):
 @api_view(['GET'])
 def getWorkers(request):
     model = mod.Accountteams.objects.all()
+    print(model)
     serializer = ser.Acc_to_TeamSerializer(model, many = True)
     return Response(serializer.data)
 
@@ -191,3 +192,16 @@ def updateTask(request, taskId):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def getTeamList(request):
+    data = mod.Teams.objects.all()
+    seri = ser.TeamSerializer(data, many = True)
+    return Response(seri.data)
+
+@api_view(['GET'])
+def getTeamWorkers(request,teamId):
+    data = mod.Teams.objects.filter(teamid = teamId)
+    print(data)
+    seri = ser.TeamSerializer(data, many = True)
+    return Response(seri.data)
