@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Teams = () => {
@@ -9,7 +10,7 @@ const Teams = () => {
     useEffect(() => {
         const fetchTeams = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/get/teams');
+                const response = await axios.get('http://localhost:8000/api/teams');
                 setTeams(response.data);
             } catch (error) {
                 setError(error);
@@ -26,6 +27,7 @@ const Teams = () => {
     return (
         <div className="teams-list">
             <h1>Teams</h1>
+            <Link to="/CreateTeam"><button>New Team</button></Link>
             <ol>
                 {teams.map(team => (
                     <li key={team.id}>
