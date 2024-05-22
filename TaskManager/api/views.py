@@ -2,8 +2,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny
-from rest_framework import generics
-from rest_framework import status
+from rest_framework import status, generics, viewsets
 
 from . import models as mod, serializers as ser
 
@@ -231,3 +230,69 @@ def getAccountList(request):
     #print(data)
     seri = ser.UserBaseInfoSerializer(data, many = True)
     return Response(seri.data)
+
+@api_view(['GET', 'POST'])
+def teams_list(request):
+    if request.method == 'GET':
+        teams = mod.Teams.objects.all()
+        serializer = ser.TeamSerializer(teams, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = ser.TeamSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def team_detail(request, pk):
+    try:
+        team = mod.Teams.objects.get(pk=pk)
+    except mod.Teams.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = ser.TeamSerializer(team)
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        serializer = ser.TeamSerializer(team, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        team.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET', 'POST'])
+def accountteams_list(request):
+    if request.method == 'GET':
+        accountteams = mod.Accountteams.objects.all()
+        serializer =ser.Acc_to_TeamSerializer(accountteams, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer =ser.Acc_to_TeamSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def accountteam_detail(request, pk):
+    try:
+        accountteam = mod.Accountteams.objects.get(pk=pk)
+    except mod.Accountteams.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = ser.Acc_to_TeamSerializer(accountteam)
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        serializer = ser.Acc_to_TeamSerializer(accountteam, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        accountteam.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

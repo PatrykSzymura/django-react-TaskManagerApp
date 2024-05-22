@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -11,6 +12,11 @@ urlpatterns = [
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('register/', views.RegisterView.as_view(), name='register'),
+
+    path('teams/', views.teams_list, name='teams-list'),
+    path('teams/<int:pk>/', views.team_detail, name='team-detail'),
+    path('accountteams/', views.accountteams_list, name='accountteams-list'),
+    path('accountteams/<int:pk>/', views.accountteam_detail, name='accountteam-detail'),
 
     # GET links  -> returns array of data or specific objects
     path('get/statuses', views.getStatus, name='getStatuses'), # returns Array of Statuses
