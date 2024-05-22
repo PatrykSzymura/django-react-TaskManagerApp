@@ -1,11 +1,12 @@
-// src/components/TeamForm.js
+// src/components/Tester.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
-const TeamForm = () => {
+const Tester = () => {
   const { id } = useParams();
-  const history = useHistory();
+  const nav = useNavigate();
   const [formData, setFormData] = useState({ teamname: '' });
   const [isEditing, setIsEditing] = useState(false);
 
@@ -28,14 +29,14 @@ const TeamForm = () => {
       axios.put(`http://localhost:8000/api/teams/${id}/`, formData)
         .then(response => {
           console.log('Team updated:', response.data);
-          history.push('/teams');
+          nav('/teams');
         })
         .catch(error => console.error('Error updating team:', error));
     } else {
       axios.post('http://localhost:8000/api/teams/', formData)
         .then(response => {
           console.log('Team created:', response.data);
-          history.push('/teams');
+          nav('/teams');
         })
         .catch(error => console.error('Error creating team:', error));
     }
@@ -58,4 +59,4 @@ const TeamForm = () => {
   );
 };
 
-export default TeamForm;
+export default Tester;
