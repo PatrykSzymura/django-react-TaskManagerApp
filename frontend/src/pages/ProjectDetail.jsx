@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getProject, getPriorities, getTeam, getStatus } from "../utils/dataFeches";
+import axiosInstance from "../utils/axiosInstance";
 
 const ProjectDetail = () => {
     const [project, setProject] = useState(null);
+    const [priority, setPriority] = useState([]);
+    const [status, setStatus] = useState([]);
     const [teamData, setTeamsData] = useState([]);
-    const [priorityData, setPriData] = useState([]);
-    const [statData, setStatData] = useState(null);
     const [dataLoaded, setDataLoaded] = useState();
     const [selectedStatus, setSelectedStatus] = useState({});
     const [selectedPriority, setSelectedPriority] = useState({});
@@ -16,13 +17,14 @@ const ProjectDetail = () => {
         const fetchData = async () => {
             try {
                 const projectResponse = await getProject(params["project_id"]);
-                const statusResponse = await getStatus();
-                const prioResponse = await getPriorities();
+                const PriorityResponse = await getPriorities();
+                const StatusResponse = await getStatus();
                 const TeamsResponse = await getTeam();
                 setProject(projectResponse.data);
-                setStatData(statusResponse.data);
-                setPriData(prioResponse.data);
-                console.log("responseebitch",prioResponse)
+                setPriority(PriorityResponse.data);
+                setStatus(StatusResponse.data);
+                setTeamsData(TeamsResponse.data);
+                console.log("responseBitch")
             } catch (error) {
                 console.error('Error fetching data', error);
             }
@@ -31,7 +33,7 @@ const ProjectDetail = () => {
         const loadData = async () => {
             await Promise.all([fetchData()]);
             if (
-                project != null 
+                project != null && priority != null && status != null
             ) {
                 setDataLoaded(true);
             } else {
@@ -42,110 +44,112 @@ const ProjectDetail = () => {
         loadData();
     }, [dataLoaded, params]);
 
-      return dataLoaded ? <DataBar data={project} statusList={statData} priorityList={priorityData}/> : <label>Loading ...</label>
+
+      return dataLoaded ? <DataBar project={project} st={status} pr= {priority} /> : <label>Loading ...</label>
 }
 
-const DataBar = ({data, statusList, priorityList}) => {
-    
-    console.log("Databar Data",data)
-
+const DataBar = ({project,st,pr}) => {
     return (
         <>
-        <div className="bg-primary grid grid-cols-10">
+        <div className="bg-primary grid grid-cols-10 gap-1 p-1">
             <div className="text-2xl font-semibold">
-                {data['project_name']}
+                {project['project_name']}
             </div>
-            <div className="font-semibold">Start Date : {data['date_start']}</div>
-            <div className="font-semibold">End Date : {data['date_end']}</div>
-            <div className="col-span-4"> <StatusBar proId={data['id']} currStat={data['status']} currPrio={data['priority']} statusList={statusList}/></div>
+            <div className="font-semibold">Start Date : {project['date_start']}</div>
+            <div className="font-semibold">End Date : {project['date_end']}</div>
+            <div className="col-span-4"> 
+                
+            </div>
             
         </div>
         </>
     );
 }
 
-const StatusBar = ({proId, currStat,currPrio,statusList, priorityList}) => {
-    const [formData, setFormData] = useState({});
-    const [usedState, setUsedState] = useState(currStat);
-    const [usedPriority, setUsedPriority] = useState(currPrio);
+const StatusBar = ({ proId, currStat, currPrio, statusList, priorityList }) => {
+    const [selectedPriority, setSelectedPriority] = useState(currPrio);
+    const [selectedStatus, setSelectedStatus] = useState(currStat);
+    const [error, setError] = useState(null);
 
-    const handleSubmit = async (e) => {};
+    const [formData, setFormData] = useState({
+        status: currStat,
+        priority: currPrio,
+    });
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axiosInstance.post(`change/projects/statusAndPriority/${proId}`, {
+                status: formData.status,
+                priority: formData.priority,
+            });
+            console.log('Update response:', response.data);
+        } catch (error) {
+            console.error('Error updating project', error);
+            setError('Error updating project');
+        }
+    };
 
     const handleChange = (e) => {
-        if (e.target.id === "status") {
-        setUsedState(e.target.value);
-        setFormData({
-            ...formData,
-            projectId: proId,
-            status: e.target.value,
-        });
-        console.log("formData",formData)
-        return;
-        } else if (e.target.id === "priorytet") {
-        setUsedPriority(e.target.value);
-        setFormData({
-            ...formData,
-            projectId: proId,
-            priorytet: e.target.value,
-        });
-        console.log("formData",formData)
-        return;
+        const { id, value } = e.target;
+        const intValue = parseInt(value, 10);
+
+        if (id === "priority") {
+            setSelectedPriority(intValue);
+        } else if (id === "status") {
+            setSelectedStatus(intValue);
         }
 
         setFormData({
-        ...formData,
-        [e.target.id]: e.target.value,
-        projectId: proId,
-        status: usedState,
-        priorytet: usedPriority,
+            ...formData,
+            [id]: intValue,
         });
-    };
 
-    useEffect(() => {
-        setUsedState(currStat);
-        setUsedPriority(currPrio);
-        setFormData({
-        ...formData,
-        projectId: proId,
-        status: currStat,
-        priorytet: currPrio,
-        });
-    }, []);
+        console.log('formDataChange', formData);
+    };
 
     return (
         <div className="">
-            <form action="">
-            <div className="join join-horizontal">
-                {statusList.map((st) => (
-                    <input 
-                        type="radio" 
-                        id="status"
-                        name="theme-buttons" 
-                        className="btn theme-controller join-item" 
-                        aria-label={st['status_name']} 
-                        checked={st['id'] === usedState}
-                        onChange={handleChange} 
-                        value={st['id']}
-                    />
-                ))}
-                {priorityList.map((st) => (
-                    <input 
-                        type="radio" 
-                        id="status"
-                        name="theme-buttons" 
-                        className="btn theme-controller join-item" 
-                        aria-label={st['status_name']} 
-                        checked={st['id'] === usedState}
-                        onChange={handleChange} 
-                        value={st['id']}
-                    />
-                ))}
-                <button className="btn btn-secondary theme-controller join-item">Apply</button>
-            </div>
+            <form onSubmit={handleSubmit} className="join join-horizontal">
+                <select
+                    className="select select-bordered w-1/2 max-w-xs join-item"
+                    id="status"
+                    value={selectedStatus}
+                    onChange={handleChange}
+                >
+                    <option disabled> Select New Status </option>
+                    {statusList.map((stat) => (
+                        <option
+                            key={stat.id}
+                            value={stat.id}
+                        >
+                            {stat.status_name}
+                        </option>
+                    ))}
+                </select>
+                <select
+                    className="select select-bordered w-1/2 max-w-xs join-item"
+                    id="priority"
+                    value={selectedPriority}
+                    onChange={handleChange}
+                >
+                    <option disabled> Select New Priority </option>
+                    {priorityList.map((stat) => (
+                        <option
+                            key={stat.id}
+                            value={stat.id}
+                        >
+                            {stat.priority_name}
+                        </option>
+                    ))}
+                </select>
+                <button type="submit" className="btn btn-base-200 join-item">Apply</button>
             </form>
+            {error && <div className="error">{error}</div>}
         </div>
-
     );
-}
+};
+
+const ChangeDescriptionAndDate = () =>{}
 
 export default ProjectDetail;

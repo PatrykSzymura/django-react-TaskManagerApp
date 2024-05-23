@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny, IsAuthenticated  
@@ -13,6 +13,29 @@ from . import models as mod, serializers as ser
 class RegisterView(generics.CreateAPIView):
     serializer_class = ser.RegisterSerializer
     permission_classes = [AllowAny]
+
+class ProjectDetailView(generics.RetrieveUpdateAPIView):
+    queryset = mod.Projects.objects.all()
+    serializer_class = ser.ProjectsSerializer
+
+
+#useless
+@api_view(['POST'])
+def set_project_status(request, project_id):
+    project = get_object_or_404(mod.Projects, id=project_id)
+    data = request.data
+
+    # Update only the status and priority fields
+    serializer = ser.ProjectsSerializer(project, data={
+        'status': data.get('status'),
+        'priority': data.get('priority')
+    }, partial=True)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def getRoutes(request):

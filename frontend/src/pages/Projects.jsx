@@ -1,7 +1,7 @@
 import React , {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import Modal from "../components/Modal"
-import { getProjectsApi } from "../utils/dataFeches";
+import { getProjectsApi  } from "../utils/dataFeches";
 import AddProjectForm from "./forms/AddProjectForm";
 
 const AddProject = () => {
