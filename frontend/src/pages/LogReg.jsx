@@ -19,7 +19,7 @@ export const LoginPage = () => {
         localStorage.setItem('access_token', access);
         localStorage.setItem('refresh_token', refresh);
         // Redirect to a protected route or handle login success
-        console.log("login success")
+        console.log("login success",localStorage.getItem['access_token'])
         nav("/projects")
       } catch (error) {
         console.error('Login failed:', error);
