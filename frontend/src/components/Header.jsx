@@ -31,6 +31,7 @@ const Header = () => {
           <Link to="/Projects" className="hover:underline">Projects</Link>
           <Modal element={<RegisPage/>} btn_Name={"create user"} modal_ID={"regis"} />
           <Link to="/CreateTeam" className="hover:underline">Manage Teams</Link>
+          <Link to="/Tasks" className="hover:underline">Tasks</Link>
           <Link to="/users" className="hover:underline">Users</Link>
           <Link to="/contact" className="hover:underline">Contact</Link>
           <button onClick={handleLogout}> Logout</button>
