@@ -1,7 +1,7 @@
 import React , {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import Modal from "../components/Modal"
-import axios from 'axios';
+import { getProjectsApi } from "../utils/dataFeches";
 import AddProjectForm from "./forms/AddProjectForm";
 
 const AddProject = () => {
@@ -79,7 +79,7 @@ const Projects = () => {
     
     let getProjects = async () => {
         try {
-            let response = await axios.get('http://127.0.0.1:8000/api/get/projects');
+            let response = await getProjectsApi();
             let data = response.data;
             console.log('Data:', data);
             setProjects(data);

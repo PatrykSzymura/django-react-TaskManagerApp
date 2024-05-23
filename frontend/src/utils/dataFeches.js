@@ -1,6 +1,11 @@
 import axiosInstance from "./axiosInstance";
 import axios from 'axios';
 
+export const getProjectsApi = async () => {
+    const response = await axiosInstance('get/projects');
+    return response
+}
+
 export const getPriorities = async () => {
     const response = await axiosInstance('get/priorities');
     return response
@@ -13,6 +18,11 @@ export const getTeams = async () => {
 
 export const getTeam = async () => {
     const response = await axiosInstance('teams/');
+    return response
+}
+
+export const getStatus = async () => {
+    const response = await axiosInstance('get/statuses');
     return response
 }
 
