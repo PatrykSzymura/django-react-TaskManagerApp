@@ -1,4 +1,5 @@
 import React , {useState, useEffect} from "react";
+import { Link } from "react-router-dom";
 import Modal from "../components/Modal"
 import axios from 'axios';
 import AddProjectForm from "./forms/AddProjectForm";
@@ -17,12 +18,57 @@ const AddProject = () => {
             </span>
             <div className='card-actions '>
               <span className={`badge badge-lg  text-gray-700 w-24`}></span>
-              <span className={`badge badge-lg  text-gray-700 w-24`}> </span>
+              <span className={`badge badge-lg  text-gray-700 w-24`}></span>
             </div>
           </div>
         </div>
     );
   };
+
+const ProjectCard = ({data}) =>{
+    const {
+        id,
+        team_id,
+        description,
+        priority,
+        project_name,
+        status,
+        date_end,
+        date_start,
+      } = data;
+
+    console.log(data)
+    return (
+        <div className=''>
+          <Link to={`/projects/${id}`}>
+            <div className='p-1'>
+              <div className='card w-full bg-gray-500/70 shadow-xl '>
+                <div className='card-body'>
+                  <h2 className='card-title'>{project_name}</h2>
+                  <p className=''>{`Przypisany zespół: ${team_id}`}</p>
+                  <p className=''>{`Start: ${date_start}`}</p>
+                  <p className=''>{`Przewidywany koniec: ${date_end}`}</p>
+                  <div className='card-actions '>
+                    <span
+                      className={`badge badge-lg bg-${"primary"} text-white strokeme2 `}
+                    >
+                      {status}
+                    </span>
+                    <span
+                      className={`badge badge-lg bg-${"primary"} strokeme2`}
+                    >
+                      {priority}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Link>
+        </div>
+      );
+        
+    
+}
 
 const Projects = () => {
     let [projects, setProjects] = useState([]);
@@ -43,18 +89,9 @@ const Projects = () => {
     };
 
     return (
-        <div className="bg-base-100 p-2 grid grid-cols-4">
+        <div className="bg-base-100 p-2 grid grid-cols-4 h-96">
                 {projects.map((project, index) => (
-                    <div key={index} className="card w-96 bg-base-300 shadow-xl">
-                        <div className=" card-body">
-                            <div className="card-title" >{project['project_name']}</div>
-                            {project['description']}
-                            <div className="card-actions justify-end">
-                                <div className="badge badge-outline">Fashion</div> 
-                                <div className="badge badge-outline">Products</div>
-                            </div>
-                        </div>
-                    </div>
+                    <ProjectCard data = {project}/>
                 ))}
             <Modal
               element={<AddProjectForm/>}
