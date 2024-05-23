@@ -43,17 +43,9 @@ function App() {
           <Route path='/projects' element={<Projects/>} />
           }
           <Route element={<LoginPage/>} path='/login'/>
-          <Route element={<RegisPage/>} path='/register'/>
+
           
-          <Route path='/test' element={<UserGroups/>} />
-
-          <Route element={<PrivateRoutes/>}>
-          <Route path='/projects' element={<Projects/>} />
-          <Route path='/Users' element={<Users/>} />
-
-          <Route path='/CreateTeam' element={<CreateTeam/>} />
-          </Route>
-          <Route path="*" element={<Navigate to="/login" />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>
     </div>
