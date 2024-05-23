@@ -9,4 +9,14 @@ export const getPriorities = async () => {
 export const getTeams = async () => {
     const response = await axiosInstance('teams/');
     return response
-} 
+}
+
+export const getTeam = async () => {
+    const response = await axiosInstance('teams/');
+    return response
+}
+
+export const getProject = async (id) => {
+    const response = await axiosInstance.get(`get/projects/${id}`);
+    return response;
+}

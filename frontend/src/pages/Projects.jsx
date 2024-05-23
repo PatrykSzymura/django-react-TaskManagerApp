@@ -37,12 +37,12 @@ const ProjectCard = ({data}) =>{
         date_start,
       } = data;
 
-    console.log(data)
+    //console.log(data)
     return (
         <div className=''>
           <Link to={`/projects/${id}`}>
             <div className='p-1'>
-              <div className='card w-full bg-gray-500/70 shadow-xl '>
+              <div className='card w-full bg-base-300 shadow-xl '>
                 <div className='card-body'>
                   <h2 className='card-title'>{project_name}</h2>
                   <p className=''>{`Przypisany zespół: ${team_id}`}</p>
@@ -90,9 +90,9 @@ const Projects = () => {
 
     return (
         <div className="bg-base-100 p-2 grid grid-cols-4 h-96">
-                {projects.map((project, index) => (
-                    <ProjectCard data = {project}/>
-                ))}
+            {projects.map((project, index) => (
+                <ProjectCard data = {project}/>
+            ))}
             <Modal
               element={<AddProjectForm/>}
               btn_Name={<AddProject />}
