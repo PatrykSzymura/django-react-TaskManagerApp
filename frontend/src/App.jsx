@@ -21,6 +21,7 @@ import {Tester , UserGroups} from './pages/Test';
 import getGroupsFromToken from './utils/axiosInstance';
 import { CreateProject } from './pages/NewFrorms';
 import ProjectDetail from './pages/ProjectDetail';
+import EditProjectForm from './pages/forms/EditProjectForm';
 
 function App() {
   const [groups, setGroups] = useState([]);
@@ -47,6 +48,8 @@ function App() {
           <Route path ="/CreateTeam" element={<CreateTeam/>}/>
           <Route path ="/Projects" element={<Projects/>}/>
           <Route path ="/Tasks" element={<Tasks/>}/>
+
+          <Route path="/projects/:project_id/edit" element={<EditProjectForm/>} />
          
         </Routes>
       </Router>

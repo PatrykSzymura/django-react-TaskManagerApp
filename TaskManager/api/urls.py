@@ -16,31 +16,28 @@ urlpatterns = [
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'), #works & used
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'), #works & used
     path('register/', views.RegisterView.as_view(), name='register'), #works & used
-    path('user/groups/', views.UserGroupView, name='user-groups'), 
 
-    path('teams/', views.teams_list, name='teams-list'),
-    path('teams/<int:pk>/', views.team_detail, name='team-detail'),
+
+
     path('get/statuses', views.getStatus, name='getStatuses'), # returns Array of Statuses
     path('get/priorities', views.getPriority, name='getpriorities'), # returns Array of Priorities
     path('get/projects', views.getProjects, name='getProjects'), # returns Array of Projects
     path('get/projects/<str:projectId>', views.getProject, name='getProject'), # returns Specific project
-
-
+    path('change/projects/statusAndPriority/<int:project_id>', views.set_project_status, name='set_project_status'),
+    path('projects/<int:pk>/', views.ProjectDetailView.as_view(), name='project-detail'),
 
     #=========================================================================================================================#
     #                                                   Maybe Working URLS                                                    #
     #=========================================================================================================================#
-
+    path('user/groups/', views.UserGroupView, name='user-groups'), 
+    path('teams/', views.teams_list, name='teams-list'),
+    path('teams/<int:pk>/', views.team_detail, name='team-detail'),
     # GET links  -> returns array of data or specific objects
     
     path('get/accountlist', views.getAccountList,name= "getAccountList"), # returns Array of accounts
     
     path('get/teams',views.getWorkers,name = 'getTeams'),# return information about team and worker
     path('get/teamslists',views.getTeamList,name = 'getTeamsList'),#return Array of teams
-
-    
-    
-
     
     path('get/tasks/<str:projectId>', views.getTasks, name='getTasks'), # returns Tasks assigned to specific project
     path('get/task/<str:taskId>', views.getTask, name='getTask'), # returns Specific task
