@@ -5,6 +5,7 @@ import { getProject, getPriorities, getTeam, getStatus } from "../utils/dataFech
 import axiosInstance from "../utils/axiosInstance";
 import Modal from "../components/Modal";
 import EditProjectForm from "./forms/EditProjectForm";
+import CreateTask from "./forms/CreateTask";
 
 const ProjectDetail = () => {
     const [project, setProject] = useState(null);
@@ -61,6 +62,7 @@ const DataBar = ({project,st,pr}) => {
             <div className="font-semibold">End Date : {project['date_end']}</div>
             <div className="col-end-11">
                 <Modal element={<EditProjectForm/>} btn_Name={<FaCog />} btn_Style={"btn btn-base-200 text-3xl"} modal_ID={"Edit"}/>
+                <Modal element={<CreateTask/>} btn_Name={<FaCog />} btn_Style={"btn btn-base-200 text-3xl"} modal_ID={"Create"}/>
             </div>
             
         </div>
