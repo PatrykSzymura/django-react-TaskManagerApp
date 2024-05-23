@@ -1,169 +1,101 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const CreateTeam = () => {
-    const [personData, setPersonData] = useState([]);
-    const [teamData, setTeamData] = useState([]);
-    const [selectedTeam, setSelectedTeam] = useState();
-    const [allChecked, setAllChecked] = useState(false);
-    const [loading, setLoading] = useState(false);
+const UserList = () => {
+    const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-  
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const accountResponse = await axios.get('http://localhost:8000/api/get/accountlist');
-                setPersonData(accountResponse.data);
+    const [teams, setTeams] = useState([]);
+    const [selectedTeam, setSelectedTeam] = useState('');
 
-                const teamsResponse = await axios.get('http://localhost:8000/api/get/teams');
-                setTeamData(teamsResponse.data.teams);
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/api/get/accountlist');
+                setUsers(response.data);
             } catch (error) {
-                console.error("Error fetching data:", error);
                 setError(error.message);
+            } finally {
+                setLoading(false);
             }
         };
 
-        fetchData();
-    }, []);
-  
-    useEffect(() => {
-        setPersonData((prevData) =>
-            prevData.map((person) => ({ ...person, isChecked: allChecked }))
-        );
-    }, [allChecked]);
-  
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            setLoading(true);
-
-            const peopleForSave = {
-                people: personData,
-                teamId: selectedTeam,
-            };
-
-            const res = await fetch("/api/accountteams/1", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(peopleForSave),
-            });
-
-            const data = await res.json();
-            setPersonData(data.people);
-
-            if (!data.success) {
-                setError(data.message);
-            } else {
-                setError(null);
+        const fetchTeams = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/api/teams');
+                setTeams(response.data.teams);
+            } catch (error) {
+                console.error('Error fetching teams:', error);
             }
-        } catch (error) {
-            setError(error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-  
-    const handleChange = (e) => {
-        const updatedId = e.target.id;
-        setPersonData((prevData) =>
-            prevData.map((person) =>
-                person.Id === updatedId ? { ...person, isChecked: !person.isChecked } : person
-            )
-        );
-    };
-  
-    const handleChangeAll = (e) => {
-        setAllChecked(!allChecked);
-    };
-  
-    const handleSelect = async (e) => {
+        };
+
+        fetchUsers();
+        fetchTeams();
+    }, []);
+
+    const handleTeamChange = (e) => {
         setSelectedTeam(e.target.value);
-
-        try {
-            const res = await axios.post("/api/v1/team/check_presence", {
-                persons: personData,
-                teamId: e.target.value,
-            });
-
-            const data = await res.data;
-            setPersonData(data.people);
-        } catch (error) {
-            console.error("Error checking team presence:", error);
-            setError(error.message);
-        }
     };
-  
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <p className='text-3xl text-center font-semibold my-7'>
-                    Manage Teams
-                </p>
-                <div className='grid grid-cols-2'>
-                    <select
-                        id='person'
-                        className='select select-bordered col-span-2'
-                        onChange={handleSelect}
-                        required
-                    >
-                        <option disabled selected>
-                            Select Team
+            <div className="mb-4">
+                <label htmlFor="teams" className="block text-sm font-medium text-gray-700">
+                    Select Team:
+                </label>
+                <select
+                    id="teams"
+                    name="teams"
+                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    value={selectedTeam}
+                    onChange={handleTeamChange}
+                >
+                    <option value="">Select a team</option>
+                    {teams.map((team, index) => (
+                        <option key={index} value={team}>
+                            {index === teams.length - 1 ? `New Team ${team}` : `Team ${team}`}
                         </option>
-                        {teamData.map((team, index) => (
-                            <option key={team} value={team}>
-                                {index === teamData.length - 1
-                                    ? `New Team ${team}`
-                                    : `Team ${team}`}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <hr className='py-2 border-none' />
-
-                <table className='table'>
+                    ))}
+                </select>
+            </div>
+            <div className="overflow-x-auto">
+                <table className="table table-zebra">
                     <thead>
                         <tr>
-                            <th>
-                                <input
-                                    type='checkbox'
-                                    className='toggle'
-                                    onChange={handleChangeAll}
-                                    checked={allChecked}
-                                />
-                            </th>
+                            <th>Checkbox</th>
                             <th>Pracownik</th>
                             <th>Stanowisko</th>
                         </tr>
                     </thead>
-                    <tbody className='overflow-y-scroll'>
-                        {personData.map((person) => (
-                            <tr key={person.Id} className='odd:bg-gray-500/20'>
+                    <tbody>
+                        {users.map((person) => (
+                            <tr key={person.Id}>
                                 <td>
-                                    <input
-                                        id={person.Id}
-                                        type='checkbox'
-                                        className='toggle'
-                                        onChange={handleChange}
-                                        checked={person.isChecked || false}
-                                    />
+                                    <label>
+                                        <input type="checkbox" className="checkbox" />
+                                    </label>
                                 </td>
                                 <td>
-                                    {person.Imie} {person.Nazwisko}
+                                    <div className="flex items-center gap-3">
+                                        <div>
+                                            <div className="font-bold">{person.username} {person.Nazwisko}</div>
+                                            <div className="text-sm opacity-50">{person.Stanowisko}</div>
+                                        </div>
+                                    </div>
                                 </td>
-                                <td>{person.Stanowisko}</td>
+                                <td>
+                                    {person.Stanowisko}
+                                </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-                <button className='btn btn-accent w-full' disabled={loading}>
-                    {loading ? "Loading..." : "Confirm Changes"}
-                </button>
-                {error && <p className="text-red-500">{error}</p>}
-            </form>
+            </div>
         </div>
     );
 };
 
-export default CreateTeam;
+export default UserList;

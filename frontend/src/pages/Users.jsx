@@ -26,14 +26,12 @@ const UserList = () => {
 
     return (
         <div className="overflow-x-auto">
-            <table className="table "></table>
-            <h1>User List</h1>
-            <table>
+            <table className="table table-zebra">
                 <thead>
                     <tr>
-                        <th>Username</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
+                        <th>Pracownik</th>
+                        <th>Nazwisko</th>
+                        <th> </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,7 +39,7 @@ const UserList = () => {
                         <tr key={user.username}>
                             <td>{user.username}</td>
                             <td>{user.first_name}</td>
-                            <td>{user.last_name}</td>
+                            <td><button className="btn btn-success">Edit</button > <button className="btn btn-error">Delete</button></td>
                         </tr>
                     ))}
                 </tbody>
