@@ -158,6 +158,7 @@ def getProject(request, projectId):
 @api_view(['POST'])
 def createProject(request):
     if request.method == 'POST':
+        print(request.data)
         serializer = ser.ProjectsSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
