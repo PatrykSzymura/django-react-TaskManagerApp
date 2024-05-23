@@ -21,13 +21,13 @@ const Teams = () => {
         fetchTeams();
     }, []);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error loading teams: {error.message}</p>;
+    //if (loading) return <p>Loading...</p>;
+    //if (error) return <p>Error loading teams: {error.message}</p>;
 
     return (
         <div className="teams-list">
             <h1>Teams</h1>
-            <Link to="/CreateTeam"><button>New Team</button></Link>
+            <Link to="/CreateTeam"><button className="btn btn-neutral">Manage Teams</button></Link>
             <ol>
                 {teams.map(team => (
                     <li key={team.id}>
