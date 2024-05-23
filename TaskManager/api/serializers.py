@@ -69,13 +69,6 @@ class UserBaseInfoSerializer(MS):
         model = m.AuthUser
         fields = ['username', 'first_name', 'last_name']
 
-class Acc_to_TeamSerializer(MS):
-    class Meta:
-        model = m.Accountteams
-        fields = '__all__'
-    teamid = TeamSerializer(read_only = True)
-    accountid = UserBaseInfoSerializer(read_only = True)
-
 class PrioritySerializer(MS):
     class Meta:
         model = m.Priorities

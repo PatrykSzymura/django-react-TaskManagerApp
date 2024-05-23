@@ -8,27 +8,11 @@
 from django.db import models
 
 
-class Accountteams(models.Model):
-    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
-    accountid = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='AccountID')  # Field name made lowercase.
-    teamid = models.ForeignKey('Teams', models.DO_NOTHING, db_column='TeamID')  # Field name made lowercase.
-
-    def __str__(self) -> str:
-        return f"{self.accountid} is in {self.teamid}"
-
-    class Meta:
-        managed = False
-        db_table = 'AccountTeams'
-
-
 class Priorities(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     priority_name = models.CharField(db_column='Priority_Name', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
     color_number = models.IntegerField(db_column='Color_Number', blank=True, null=True)  # Field name made lowercase.
-    
-    def __str__(self) -> str:
-        return self.priority_name
-    
+
     class Meta:
         managed = False
         db_table = 'Priorities'
@@ -44,9 +28,6 @@ class Projects(models.Model):
     date_end = models.DateField(db_column='Date_End', blank=True, null=True)  # Field name made lowercase.
     description = models.CharField(db_column='Description', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
 
-    def __str__(self) -> str:
-        return self.project_name
-
     class Meta:
         managed = False
         db_table = 'Projects'
@@ -57,9 +38,6 @@ class Statuses(models.Model):
     status_name = models.CharField(db_column='Status_Name', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
     color_nr = models.IntegerField(db_column='Color_Nr', blank=True, null=True)  # Field name made lowercase.
 
-    def __str__(self) -> str:
-        return self.status_name
-    
     class Meta:
         managed = False
         db_table = 'Statuses'
@@ -75,9 +53,6 @@ class Tasks(models.Model):
     date_end = models.DateField(db_column='Date_End', blank=True, null=True)  # Field name made lowercase.
     description = models.CharField(db_column='Description', max_length=255, db_collation='Polish_CI_AS', blank=True, null=True)  # Field name made lowercase.
 
-    def __str__(self) -> str:
-        return f"{self.task_name} of {self.project}"
-
     class Meta:
         managed = False
         db_table = 'Tasks'
@@ -87,12 +62,27 @@ class Teams(models.Model):
     teamid = models.AutoField(db_column='TeamID', primary_key=True)  # Field name made lowercase.
     teamname = models.CharField(db_column='TeamName', max_length=100, db_collation='Polish_CI_AS')  # Field name made lowercase.
 
-    def __str__(self) -> str:
-        return f"{self.teamid}|{self.teamname[0:30]}|"
-
     class Meta:
         managed = False
         db_table = 'Teams'
+
+
+class Teamslist(models.Model):
+    teamid = models.OneToOneField(Teams, models.DO_NOTHING, db_column='TeamID', primary_key=True)  # Field name made lowercase.
+    member1 = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='Member1', blank=True, null=True)  # Field name made lowercase.
+    member2 = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='Member2', related_name='teamslist_member2_set', blank=True, null=True)  # Field name made lowercase.
+    member3 = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='Member3', related_name='teamslist_member3_set', blank=True, null=True)  # Field name made lowercase.
+    member4 = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='Member4', related_name='teamslist_member4_set', blank=True, null=True)  # Field name made lowercase.
+    member5 = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='Member5', related_name='teamslist_member5_set', blank=True, null=True)  # Field name made lowercase.
+    member6 = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='Member6', related_name='teamslist_member6_set', blank=True, null=True)  # Field name made lowercase.
+    member7 = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='Member7', related_name='teamslist_member7_set', blank=True, null=True)  # Field name made lowercase.
+    member8 = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='Member8', related_name='teamslist_member8_set', blank=True, null=True)  # Field name made lowercase.
+    member9 = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='Member9', related_name='teamslist_member9_set', blank=True, null=True)  # Field name made lowercase.
+    member10 = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='Member10', related_name='teamslist_member10_set', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'TeamsList'
 
 
 class AuthGroup(models.Model):
@@ -137,9 +127,6 @@ class AuthUser(models.Model):
     is_active = models.BooleanField()
     date_joined = models.DateTimeField()
 
-    def __str__(self) -> str:
-        return self.username
-    
     class Meta:
         managed = False
         db_table = 'auth_user'

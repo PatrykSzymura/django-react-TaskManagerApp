@@ -120,10 +120,7 @@ def getRoutes(request):
 
 @api_view(['GET'])
 def getWorkers(request):
-    model = mod.Accountteams.objects.all()
-    print(model)
-    serializer = ser.Acc_to_TeamSerializer(model, many = True)
-    return Response(serializer.data)
+    return Null
 
 @api_view(['GET'])
 def getTeams(request):
@@ -151,18 +148,20 @@ def getProjects(request):
 
 @api_view(['GET'])
 def getProject(request, projectId):
-    projects = mod.Projekty.objects.get(id = projectId)
+    projects = mod.Projects.objects.get(id = projectId)
     serializer = ser.ProjectsSerializer(projects, many = False)
     return Response(serializer.data)
 
 @api_view(['POST'])
 def createProject(request):
     if request.method == 'POST':
-        print(request.data)
+        print(request.data)  # Log incoming request data for debugging
         serializer = ser.ProjectsSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            print(serializer.errors)  # Log serializer errors for debugging
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
@@ -189,8 +188,8 @@ def createTask(request):
 @api_view(['PUT'])
 def updateProject(request, projectId):
     try:
-        project = mod.Projekty.objects.get(id = projectId)
-    except mod.Projekty.DoesNotExist:
+        project = mod.Projects.objects.get(id = projectId)
+    except mod.Projects.DoesNotExist:
         return Response({'error': 'Project not found'}, status=status.HTTP_404_NOT_FOUND)
 
     serializer = ser.ProjectsSerializer(project, data=request.data)
@@ -263,39 +262,6 @@ def team_detail(request, pk):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
         team.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-@api_view(['GET', 'POST'])
-def accountteams_list(request):
-    if request.method == 'GET':
-        accountteams = mod.Accountteams.objects.all()
-        serializer =ser.Acc_to_TeamSerializer(accountteams, many=True)
-        return Response(serializer.data)
-    elif request.method == 'POST':
-        serializer =ser.Acc_to_TeamSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['GET', 'PUT', 'DELETE'])
-def accountteam_detail(request, pk):
-    try:
-        accountteam = mod.Accountteams.objects.get(pk=pk)
-    except mod.Accountteams.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'GET':
-        serializer = ser.Acc_to_TeamSerializer(accountteam)
-        return Response(serializer.data)
-    elif request.method == 'PUT':
-        serializer = ser.Acc_to_TeamSerializer(accountteam, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == 'DELETE':
-        accountteam.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET'])  
