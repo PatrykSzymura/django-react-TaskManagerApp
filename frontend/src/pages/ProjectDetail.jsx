@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+import { FaCog } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { getProject, getPriorities, getTeam, getStatus } from "../utils/dataFeches";
 import axiosInstance from "../utils/axiosInstance";
+import Modal from "../components/Modal";
+import EditProjectForm from "./forms/EditProjectForm";
 
 const ProjectDetail = () => {
     const [project, setProject] = useState(null);
@@ -44,21 +47,20 @@ const ProjectDetail = () => {
         loadData();
     }, [dataLoaded, params]);
 
-
       return dataLoaded ? <DataBar project={project} st={status} pr= {priority} /> : <label>Loading ...</label>
 }
 
 const DataBar = ({project,st,pr}) => {
     return (
         <>
-        <div className="bg-primary grid grid-cols-10 gap-1 p-1">
+        <div className="bg-primary grid grid-cols-10 gap-1 p-2">
             <div className="text-2xl font-semibold">
                 {project['project_name']}
             </div>
             <div className="font-semibold">Start Date : {project['date_start']}</div>
             <div className="font-semibold">End Date : {project['date_end']}</div>
-            <div className="col-span-4"> 
-                
+            <div className="col-end-11">
+                <Modal element={<EditProjectForm/>} btn_Name={<FaCog />} btn_Style={"btn btn-base-200 text-3xl"} modal_ID={"Edit"}/>
             </div>
             
         </div>
@@ -150,6 +152,5 @@ const StatusBar = ({ proId, currStat, currPrio, statusList, priorityList }) => {
     );
 };
 
-const ChangeDescriptionAndDate = () =>{}
 
 export default ProjectDetail;
