@@ -2,7 +2,7 @@ from rest_framework.serializers import ModelSerializer as MS
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,Group
 from django.contrib.auth.password_validation import validate_password
 from . import models as m
 
@@ -37,9 +37,22 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         print(type(user))
         # Add custom claims
         token['username'] = user.username
+        groups = user.groups.values_list('name', flat=True)
+        token['groups'] = list(groups)
         # ...
 
         return token
+
+class UserGroupSerializer(MS):
+    groups = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='name'
+    )
+
+    class Meta:
+        model = m.AuthUser
+        fields = ['username', 'groups']
 
 class StatusSerializer(MS):
     class Meta:
