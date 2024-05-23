@@ -3,8 +3,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useParams } from 'react-router-dom';
+import axiosInstance from '../utils/axiosInstance';
 
-const Tester = () => {
+export const Tester = () => {
   const { id } = useParams();
   const nav = useNavigate();
   const [formData, setFormData] = useState({ teamname: '' });
@@ -59,4 +60,46 @@ const Tester = () => {
   );
 };
 
-export default Tester;
+export const UserGroups = () => {
+  const [userGroups, setUserGroups] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchUserGroups = async () => {
+      console.log(sessionStorage.getItem('access_token'))
+      try {
+        const response = await axiosInstance.get('user/groups/', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+          }
+        });
+        setUserGroups(response.data);
+      } catch (err) {
+        setError(err);
+      }
+    };
+
+    fetchUserGroups();
+  }, []);
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (!userGroups) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <h1>User Groups</h1>
+      <p>Username: {userGroups.username}</p>
+      <ul>
+        {userGroups.groups.map((group, index) => (
+          <li key={index}>{group}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
