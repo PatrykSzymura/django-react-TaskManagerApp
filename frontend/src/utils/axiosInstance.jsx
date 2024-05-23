@@ -4,6 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 export const getGroupsFromToken = (token) => {
   try {
     const decodedToken = jwtDecode(token);
+    console.log(decodedToken)
     return decodedToken.groups || [];
   } catch (error) {
     console.error('Invalid token:', error);

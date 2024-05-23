@@ -1,6 +1,8 @@
 // src/components/Header.jsx
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Modal from './Modal';
+import { RegisPage } from '../pages/LogReg';
 
 const logout = () => {
   localStorage.removeItem('access_token'); 
@@ -27,6 +29,7 @@ const Header = () => {
          (typeof localStorage['access_token'] != "undefined") ? (
         <div className="flex gap-4">
           <Link to="/Projects" className="hover:underline">Projects</Link>
+          <Modal element={<RegisPage/>} btn_Name={"create user"} modal_ID={"regis"} />
           <Link to="/CreateTeam" className="hover:underline">Manage Teams</Link>
           <Link to="/users" className="hover:underline">Users</Link>
           <Link to="/contact" className="hover:underline">Contact</Link>
