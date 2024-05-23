@@ -1,5 +1,5 @@
 import './App.css';
-
+import { useEffect, useState } from "react";
 import Projects from'./pages/Projects'
 import Header from './components/Header';
 import PrivateRoutes from './utils/PrivateRoutes'
@@ -16,16 +16,28 @@ import {
   Link,
   Outlet,
 } from 'react-router-dom';
-import Tester from './pages/Test';
+import {Tester , UserGroups} from './pages/Test';
+import getGroupsFromToken from './utils/axiosInstance';
 
 function App() {
+  const [groups, setGroups] = useState([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token'); // or however you store your JWT
+    if (token) {
+      const userGroups = getGroupsFromToken(token);
+      setGroups(userGroups);
+    } 
+  }, []);
+  console.log(groups)
+
   return (
     <div className="App place-content-center">
       <Router>
         <Header/>
         <Routes>
-        <Route element={<Tester/>} path='/test'/>
-          { sessionStorage.getItem('access_token') == null ? 
+        
+          { sessionStorage.getItem('access_token') === null ? 
           <Route element={<Overview/>} path='/'/> 
           : 
           <Route path='/projects' element={<Projects/>} />
@@ -33,13 +45,13 @@ function App() {
           <Route element={<LoginPage/>} path='/login'/>
           <Route element={<RegisPage/>} path='/register'/>
           
+          <Route path='/test' element={<UserGroups/>} />
 
           <Route element={<PrivateRoutes/>}>
           <Route path='/projects' element={<Projects/>} />
           <Route path='/Users' element={<Users/>} />
 
           <Route path='/CreateTeam' element={<CreateTeam/>} />
-
           </Route>
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
