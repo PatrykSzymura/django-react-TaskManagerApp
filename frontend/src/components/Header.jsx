@@ -28,7 +28,6 @@ const Header = () => {
         <div className="flex gap-4">
           <Link to="/Projects" className="hover:underline">Projects</Link>
           <Link to="/CreateTeam" className="hover:underline">Manage Teams</Link>
-          <Link to="/projects" className="hover:underline">Projects</Link>
           <Link to="/users" className="hover:underline">Users</Link>
           <Link to="/contact" className="hover:underline">Contact</Link>
           <button onClick={handleLogout}> Logout</button>
