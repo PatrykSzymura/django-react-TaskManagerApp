@@ -1,6 +1,7 @@
 import React , {useState, useEffect} from "react";
 import Modal from "../components/Modal"
 import axios from 'axios';
+import AddProjectForm from "./forms/AddProjectForm";
 
 const AddProject = () => {
     return (
@@ -56,7 +57,7 @@ const Projects = () => {
                     </div>
                 ))}
             <Modal
-              element={<h3>Form to add</h3>}
+              element={<AddProjectForm/>}
               btn_Name={<AddProject />}
               modal_ID={"add project"}
             />

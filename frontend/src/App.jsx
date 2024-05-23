@@ -18,6 +18,7 @@ import {
 } from 'react-router-dom';
 import {Tester , UserGroups} from './pages/Test';
 import getGroupsFromToken from './utils/axiosInstance';
+import { CreateProject } from './pages/NewFrorms';
 
 function App() {
   const [groups, setGroups] = useState([]);
@@ -37,15 +38,11 @@ function App() {
         <Header/>
         <Routes>
         
-          { sessionStorage.getItem('access_token') === null ? 
-          <Route element={<Overview/>} path='/'/> 
-          : 
-          <Route path='/projects' element={<Projects/>} />
-          }
           <Route element={<LoginPage/>} path='/login'/>
+          <Route element={<Projects/>} path='/'/>
 
-          
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path ="/test" element={<CreateProject/>}/>
+         
         </Routes>
       </Router>
     </div>
