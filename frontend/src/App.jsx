@@ -5,6 +5,7 @@ import Header from './components/Header';
 import PrivateRoutes from './utils/PrivateRoutes'
 import { LoginPage , RegisPage} from "./pages/LogReg";
 import Overview from "./pages/Overview"
+import Tasks from "./pages/Tasks.jsx"
 
 import CreateTeam from './pages/CreateTeam';
 import Users from './pages/Users';
@@ -41,10 +42,11 @@ function App() {
         
           <Route element={<LoginPage/>} path='/login'/>
           <Route element={<Projects/>} path='/'/>
-          <Route
-            path='/projects/:project_id' element={<ProjectDetail/>}/>
-
+          <Route path='/projects/:project_id' element={<ProjectDetail/>}/>
           <Route path ="/test" element={<CreateProject/>}/>
+          <Route path ="/CreateTeam" element={<CreateTeam/>}/>
+          <Route path ="/Projects" element={<Projects/>}/>
+          <Route path ="/Tasks" element={<Tasks/>}/>
          
         </Routes>
       </Router>
