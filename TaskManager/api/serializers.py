@@ -82,7 +82,7 @@ class PrioritySerializer(MS):
         model = m.Priorities
         fields = '__all__'
 
-class ProjectsSerializer(serializers.ModelSerializer):
+class ProjectsSerializer(MS):
     team_id = serializers.PrimaryKeyRelatedField(queryset=m.Teams.objects.all(), source='team')
     priority = serializers.PrimaryKeyRelatedField(queryset=m.Priorities.objects.all())
 
@@ -95,3 +95,8 @@ class TaskSerializer(MS):
         model = m.Tasks
         fields = ['id','task_name','project','worker','status','date_start','date_end']
     status = StatusSerializer(read_only = True)
+
+class AuthGroupSerializer(MS):
+    class Meta:
+        model = m.AuthGroup
+        fields = ['id', 'name']

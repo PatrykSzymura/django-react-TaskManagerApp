@@ -17,8 +17,6 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'), #works & used
     path('register/', views.RegisterView.as_view(), name='register'), #works & used
 
-
-
     path('get/statuses', views.getStatus, name='getStatuses'), # returns Array of Statuses
     path('get/priorities', views.getPriority, name='getpriorities'), # returns Array of Priorities
     path('get/projects', views.getProjects, name='getProjects'), # returns Array of Projects
@@ -28,29 +26,30 @@ urlpatterns = [
     path('teamslist/', views.teamslist_list, name='teamlists'),
     path('teamslist/<int:pk>/', views.teamslist_detail, name='teamlists-detail'),
     path('get/accountlist', views.getAccountList,name= "getAccountList"), # returns Array of accounts
+    path('create/project', views.createProject, name='createProject'), # recives data for creation of project
+    path('tasks/', views.create_or_update_task, name='create_or_update_task'), #recives data for creating or updating task
+    path('auth-groups/', views.AuthGroupListView.as_view(), name='auth_group_list'), #returns list of permission groups
 
     #=========================================================================================================================#
     #                                                   Maybe Working URLS                                                    #
     #=========================================================================================================================#
-    path('user/groups/', views.UserGroupView, name='user-groups'), 
+    
     path('teams/', views.teams_list, name='teams-list'),
-    path('teams/<int:pk>/', views.team_detail, name='team-detail'),
+    
     # GET links  -> returns array of data or specific objects
     
     
     
-    path('get/teams',views.getWorkers,name = 'getTeams'),# return information about team and worker
     path('get/teamslists',views.getTeamList,name = 'getTeamsList'),#return Array of teams
     
     path('get/tasks/<str:projectId>', views.getTasks, name='getTasks'), # returns Tasks assigned to specific project
     path('get/task/<str:taskId>', views.getTask, name='getTask'), # returns Specific task
     
     # POST links -> recives data for creation objects
-    path('create/project', views.createProject, name='createProject'), # recives data for creation of project
+
     path('create/task', views.createTask, name='createTask'), # recives data for creation of task
 
     # PUT links -> recives data for updating objects
-    path('update/project/<str:projectId>', views.updateProject, name='updateProject'), # recives data for updating of project
     path('update/task/<str:taskId>', views.updateTask, name='updateTask'), # recives data for updating of task
 
 ]

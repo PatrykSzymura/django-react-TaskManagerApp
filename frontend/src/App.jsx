@@ -24,6 +24,7 @@ import { CreateProject } from './pages/NewFrorms';
 import ProjectDetail from './pages/ProjectDetail';
 import EditProjectForm from './pages/forms/EditProjectForm';
 import CreateTask from "./pages/forms/CreateTask";
+import AddTaskForm from './pages/forms/AddTaskForm.jsx';
 
 function App() {
   const [groups, setGroups] = useState([]);
@@ -46,7 +47,7 @@ function App() {
           <Route element={<LoginPage/>} path='/login'/>
           <Route element={<Projects/>} path='/'/>
           <Route path='/projects/:project_id' element={<ProjectDetail/>}/>
-          <Route path ="/test" element={<CreateProject/>}/>
+          <Route path ="/test" element={<AddTaskForm/>}/>
           <Route path ="/CreateTeam" element={<CreateTeam/>}/>
           <Route path ="/Projects" element={<Projects/>}/>
           <Route path ="/tasks" element={<Tasks/>}/>
