@@ -8,16 +8,36 @@ from . import models as mod, serializers as ser
 
 # Create your views here.
 
+class AuthGroupListView(generics.ListAPIView):
+    queryset = mod.AuthGroup.objects.all().order_by('id')
+    serializer_class = ser.AuthGroupSerializer
 
+#:>
+@api_view(['POST', 'PUT'])
+def create_or_update_task(request):
+    if request.method == 'POST':
+        serializer = ser.TaskSerializer(data=request.data)
+    elif request.method == 'PUT':
+        task_id = request.data.get('id')
+        task_instance = mod.Tasks.objects.get(pk=task_id)
+        serializer = ser.TaskSerializer(task_instance, data=request.data)
 
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# :>
 class RegisterView(generics.CreateAPIView):
     serializer_class = ser.RegisterSerializer
     permission_classes = [AllowAny]
 
+# :>
 class ProjectDetailView(generics.RetrieveUpdateAPIView):
     queryset = mod.Projects.objects.all()
     serializer_class = ser.ProjectsSerializer
 
+# :>
 @api_view(['GET', 'POST'])
 def teamslist_list(request):
     print(request.data)
@@ -33,6 +53,7 @@ def teamslist_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# :>
 @api_view(['GET', 'PUT', 'DELETE'])
 def teamslist_detail(request, pk):
     try:
@@ -56,7 +77,7 @@ def teamslist_detail(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-#useless
+# :>
 @api_view(['POST'])
 def set_project_status(request, project_id):
     project = get_object_or_404(mod.Projects, id=project_id)
@@ -74,6 +95,7 @@ def set_project_status(request, project_id):
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# :>
 @api_view(['GET'])
 def getRoutes(request):
     routes = [
@@ -245,18 +267,6 @@ def createTask(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['PUT'])
-def updateProject(request, projectId):
-    try:
-        project = mod.Projects.objects.get(id = projectId)
-    except mod.Projects.DoesNotExist:
-        return Response({'error': 'Project not found'}, status=status.HTTP_404_NOT_FOUND)
-
-    serializer = ser.ProjectsSerializer(project, data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PUT'])
 def updateTask(request, taskId):
@@ -271,19 +281,14 @@ def updateTask(request, taskId):
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# :>
 @api_view(['GET'])
 def getTeamList(request):
     data = mod.Teams.objects.all()
     seri = ser.TeamSerializer(data, many = True)
     return Response(seri.data)
 
-@api_view(['GET'])
-def getTeamWorkers(request,teamId):
-    data = mod.Teams.objects.filter(teamid = teamId)
-    print(data)
-    seri = ser.TeamSerializer(data, many = True)
-    return Response(seri.data)
-
+# :>
 @api_view(['GET'])
 def getAccountList(request):
     data = mod.AuthUser.objects.filter()
@@ -291,6 +296,8 @@ def getAccountList(request):
     seri = ser.UserBaseInfoSerializer(data, many = True)
     return Response(seri.data)
 
+
+# :>
 @api_view(['GET', 'POST'])
 def teams_list(request):
     if request.method == 'GET':
@@ -304,28 +311,6 @@ def teams_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def team_detail(request, pk):
-    try:
-        team = mod.Teams.objects.get(pk=pk)
-    except mod.Teams.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
 
-    if request.method == 'GET':
-        serializer = ser.TeamSerializer(team)
-        return Response(serializer.data)
-    elif request.method == 'PUT':
-        serializer = ser.TeamSerializer(team, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == 'DELETE':
-        team.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
-@api_view(['GET'])  
-def UserGroupView(request):
-    data = mod.AuthUser.objects.all()
-    serializer = ser.UserGroupSerializer(data, many = True)
-    return Response(serializer)
+

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import axios from 'axios';
 import axiosInstance from '../../utils/axiosInstance';
 import { getPriorities, getStatus, getTeams } from '../../utils/dataFeches';
 
