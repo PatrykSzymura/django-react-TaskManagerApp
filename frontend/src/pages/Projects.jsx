@@ -7,9 +7,9 @@ import AddProjectForm from "./forms/AddProjectForm";
 const AddProject = () => {
     return (
       
-        <div className='card w-96 bg-base-300 shadow-xl skeleton'>
+        <div className='card  bg-base-300 shadow-xl skeleton h-auto'>
           <div className='card-body'>
-            <h2 className='card-title badge badge-lg w-72 h-6'></h2>
+            <h2 className='card-title badge badge-lg w-5/6 h-6'></h2>
             <p className='badge badge-lg w-24 h-6'></p>
             <p className='badge badge-lg w-48 h-6'></p>
             <p className='badge badge-lg w-48 h-6'></p>
@@ -39,9 +39,9 @@ const ProjectCard = ({data}) =>{
 
     //console.log(data)
     return (
-        <div className=''>
+        <div className='h-auto'>
           <Link to={`/projects/${id}`}>
-            <div className='p-1'>
+            <div className='p-1 h-full'>
               <div className='card w-full bg-base-300 shadow-xl '>
                 <div className='card-body'>
                   <h2 className='card-title'>{project_name}</h2>
@@ -89,13 +89,14 @@ const Projects = () => {
     };
 
     return (
-        <div className="bg-base-100 p-2 grid grid-cols-4 h-96">
+        <div className="bg-base-100 p-2 grid grid-cols-4 ">
             {projects.map((project, index) => (
                 <ProjectCard data = {project}/>
             ))}
             <Modal
               element={<AddProjectForm/>}
               btn_Name={<AddProject />}
+              btn_Style={' mx-2 my-1 h-auto'}
               modal_ID={"add project"}
             />
             
