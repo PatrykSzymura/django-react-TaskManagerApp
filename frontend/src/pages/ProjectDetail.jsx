@@ -7,6 +7,7 @@ import axiosInstance from "../utils/axiosInstance";
 import Modal from "../components/Modal";
 import EditProjectForm from "./forms/EditProjectForm";
 import CreateTask from "./forms/CreateTask";
+import TaskList from './Tasks'
 
 const ProjectDetail = () => {
     const [project, setProject] = useState(null);
@@ -49,7 +50,14 @@ const ProjectDetail = () => {
         loadData();
     }, [dataLoaded, params]);
 
-      return dataLoaded ? <DataBar project={project} st={status} pr= {priority} /> : <label>Loading ...</label>
+    return dataLoaded ? (
+        <>
+            <DataBar project={project} st={status} pr={priority} />
+            <TaskList project={project}/>
+        </>
+    ) : (
+        <label>Loading ...</label>
+    );
 }
 
 const DataBar = ({project,st,pr}) => {
