@@ -45,7 +45,7 @@ const CreateTask = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axiosInstance.post(`/api/create/task`, { ...task, project_id: params.project_id });
+            const response = await axiosInstance.post(`create/task`, { ...task, project_id: params.project_id });
             alert('Task created successfully!');
         } catch (error) {
             console.error("There was an error creating the task!", error);

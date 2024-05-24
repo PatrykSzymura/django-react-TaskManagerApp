@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const TaskList = ({ project }) => { 
+const TaskList = ({ project }) => {
     const [tasks, setTasks] = useState([]);
     const [loadingTasks, setLoadingTasks] = useState(false);
     const [error, setError] = useState(null);
@@ -10,8 +10,10 @@ const TaskList = ({ project }) => {
         setLoadingTasks(true);
         try {
             const response = await axios.get(`http://localhost:8000/api/get/tasks/${projectId}`);
+            console.log("Fetched tasks:", response.data); // Dodane logowanie
             setTasks(response.data);
         } catch (error) {
+            console.error("Error fetching tasks:", error); // Dodane logowanie
             setError(error.message);
         } finally {
             setLoadingTasks(false);
@@ -20,12 +22,13 @@ const TaskList = ({ project }) => {
 
     useEffect(() => {
         if (project) {
-            fetchTasks(project.id); 
+            console.log("Fetching tasks for project ID:", project.id); // Dodane logowanie
+            fetchTasks(project.id);
         }
     }, [project]);
 
-    if (!project) return <p>No project selected</p>; 
-   return (
+    if (!project) return <p>No project selected</p>;
+    return (
         <div>
             <div className="overflow-x-auto">
                 {loadingTasks ? (
@@ -57,6 +60,7 @@ const TaskList = ({ project }) => {
                     </table>
                 )}
             </div>
+            {error && <p className="error">{error}</p>} {/* Dodane wyświetlanie błędów */}
         </div>
     );
 };

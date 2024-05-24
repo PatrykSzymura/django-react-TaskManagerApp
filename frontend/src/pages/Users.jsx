@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { getUserList } from '../utils/dataFeches';
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
@@ -9,7 +9,7 @@ const UserList = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/get/accountlist');
+                const response = await getUserList();
                 setUsers(response.data);
             } catch (error) {
                 setError(error.message);
@@ -39,7 +39,10 @@ const UserList = () => {
                         <tr key={user.username}>
                             <td>{user.username}</td>
                             <td>{user.first_name}</td>
-                            <td><button className="btn btn-success">Edit</button > <button className="btn btn-error">Delete</button></td>
+                            <td>
+                                <button className="btn btn-success m-2">Edit</button>
+                                <button className="btn btn-error">Delete</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
