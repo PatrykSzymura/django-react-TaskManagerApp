@@ -1,31 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import axios from 'axios';
 import axiosInstance from '../../utils/axiosInstance';
-import {getStatus, } from '../../utils/dataFeches';
+import { getStatus, getAccountList } from '../../utils/dataFeches'; // Załóżmy, że istnieje funkcja getAccountList do pobierania listy użytkowników.
 
 const CreateTask = () => {
     const [task, setTask] = useState({
         task_name: '',
         description: '',
         status: '',
+        date_start: '',
+        date_end: '',
+        assigned_to: '', // Dodane pole dla przydzielonego użytkownika
     });
 
     const [statusData, setStatusData] = useState([]);
-
+    const [userList, setUserList] = useState([]); // Stan przechowujący listę użytkowników
     const params = useParams();
 
     useEffect(() => {
-        const fetchStatus = async () => {
+        const fetchData = async () => {
             try {
                 const statusResponse = await getStatus();
                 setStatusData(statusResponse.data);
+                
+                const userListResponse = await getAccountList(); // Pobranie listy użytkowników
+                setUserList(userListResponse.data);
             } catch (error) {
-                console.error('Error fetching status data', error);
+                console.error('Error fetching data', error);
             }
         };
 
-        fetchStatus();
+        fetchData();
     }, []);
 
     const handleChange = (e) => {
@@ -41,7 +46,6 @@ const CreateTask = () => {
         try {
             const response = await axiosInstance.post(`/api/create/task`, { ...task, project_id: params.project_id });
             alert('Task created successfully!');
-            
         } catch (error) {
             console.error("There was an error creating the task!", error);
         }
@@ -82,11 +86,49 @@ const CreateTask = () => {
                 >
                     <option disabled selected>
                         Select Status
-                        </option>
-                            {statusData.map((status) => (
-                                <option key={status['id']} value={status['id']}>
-                            {status['status_name']}
                     </option>
+                    {statusData.map((status) => (
+                        <option key={status['id']} value={status['id']}>
+                            {status['status_name']}
+                        </option>
+                    ))}
+                </select>
+
+                <input
+                    type="date"
+                    name="date_start"
+                    value={task.date_start}
+                    onChange={handleChange}
+                    className='input input-bordered col-span-3' 
+                    placeholder="Start Date"
+                    required
+                />
+
+                <input
+                    type="date"
+                    name="date_end"
+                    value={task.date_end}
+                    onChange={handleChange}
+                    className='input input-bordered col-span-3'
+                    placeholder="End Date"
+                    required
+                />
+
+                <select
+                    id='assigned_to'
+                    name="assigned_to" 
+                    className='select select-bordered col-span-6'
+                    value={task.assigned_to} 
+                    onChange={handleChange}
+                    required
+                >
+                    <option disabled selected>
+                        Select Assigned User
+                    </option>
+                    {userList.map((user) => (
+                        <option key={user['id']} value={user['id']}>
+                            {user['name']}
+                        </option>
                     ))}
                 </select>
 
