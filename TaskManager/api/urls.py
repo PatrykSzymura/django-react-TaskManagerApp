@@ -31,6 +31,7 @@ urlpatterns = [
     path('auth-groups/', views.AuthGroupListView.as_view(), name='auth_group_list'), #returns list of permission groups
     path('user-groups/<int:user_id>/', views.GroupByUserAPIView.as_view(), name='group_by_user'),
     path('auth-user-groups/', views.AuthUserGroupsListView.as_view(), name='auth_user_groups_list'),
+    path('create/project', views.createProject, name='createProject'), # recives data for creation of project
     #=========================================================================================================================#
     #                                                   Maybe Working URLS                                                    #
     #=========================================================================================================================#
