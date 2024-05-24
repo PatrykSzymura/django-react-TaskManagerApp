@@ -18,6 +18,43 @@ class ProjectDetailView(generics.RetrieveUpdateAPIView):
     queryset = mod.Projects.objects.all()
     serializer_class = ser.ProjectsSerializer
 
+@api_view(['GET', 'POST'])
+def teamslist_list(request):
+    print(request.data)
+    if request.method == 'GET':
+        teamslists = mod.Teamslist.objects.all()
+        serializer = ser.TeamslistSerializer(teamslists, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = ser.TeamslistSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def teamslist_detail(request, pk):
+    try:
+        teamslist = mod.Teamslist.objects.get(pk=pk)
+    except  mod.Teamslist.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = ser.TeamslistSerializer(teamslist)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = ser.TeamslistSerializer(teamslist, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        teamslist.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 #useless
 @api_view(['POST'])

@@ -6,6 +6,7 @@ from django.contrib.auth.models import User,Group
 from django.contrib.auth.password_validation import validate_password
 from . import models as m
 
+#used
 class RegisterSerializer(MS):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True, required=True)
@@ -29,7 +30,7 @@ class RegisterSerializer(MS):
         user.set_password(validated_data['password'])
         user.save()
         return user
-
+#used
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -42,7 +43,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         # ...
 
         return token
-
+#used
 class UserGroupSerializer(MS):
     groups = serializers.SlugRelatedField(
         many=True,
@@ -53,12 +54,12 @@ class UserGroupSerializer(MS):
     class Meta:
         model = m.AuthUser
         fields = ['username', 'groups']
-
+#used
 class StatusSerializer(MS):
     class Meta:
         model = m.Statuses
         fields = '__all__'
-
+#used
 class TeamSerializer(MS):
     class Meta:
         model = m.Teams
@@ -67,8 +68,15 @@ class TeamSerializer(MS):
 class UserBaseInfoSerializer(MS):
     class Meta:
         model = m.AuthUser
-        fields = ['username', 'first_name', 'last_name']
+        fields = ['id','username', 'first_name', 'last_name']
 
+#used
+class TeamslistSerializer(MS):
+    class Meta:
+        model = m.Teamslist
+        exclude = ['teamid']
+
+#used
 class PrioritySerializer(MS):
     class Meta:
         model = m.Priorities

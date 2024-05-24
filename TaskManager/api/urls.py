@@ -25,6 +25,9 @@ urlpatterns = [
     path('get/projects/<str:projectId>', views.getProject, name='getProject'), # returns Specific project
     path('change/projects/statusAndPriority/<int:project_id>', views.set_project_status, name='set_project_status'),
     path('projects/<int:pk>/', views.ProjectDetailView.as_view(), name='project-detail'),
+    path('teamslist/', views.teamslist_list, name='teamlists'),
+    path('teamslist/<int:pk>/', views.teamslist_detail, name='teamlists-detail'),
+    path('get/accountlist', views.getAccountList,name= "getAccountList"), # returns Array of accounts
 
     #=========================================================================================================================#
     #                                                   Maybe Working URLS                                                    #
@@ -34,7 +37,7 @@ urlpatterns = [
     path('teams/<int:pk>/', views.team_detail, name='team-detail'),
     # GET links  -> returns array of data or specific objects
     
-    path('get/accountlist', views.getAccountList,name= "getAccountList"), # returns Array of accounts
+    
     
     path('get/teams',views.getWorkers,name = 'getTeams'),# return information about team and worker
     path('get/teamslists',views.getTeamList,name = 'getTeamsList'),#return Array of teams

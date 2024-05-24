@@ -7,6 +7,7 @@ import { LoginPage , RegisPage} from "./pages/LogReg";
 import Overview from "./pages/Overview"
 import Tasks from "./pages/Tasks.jsx"
 
+import TeamForm from "./pages/forms/TeamForm.jsx"
 import CreateTeam from './pages/CreateTeam';
 import Users from './pages/Users';
 import {
@@ -47,7 +48,9 @@ function App() {
           <Route path ="/test" element={<CreateProject/>}/>
           <Route path ="/CreateTeam" element={<CreateTeam/>}/>
           <Route path ="/Projects" element={<Projects/>}/>
-          <Route path ="/Tasks" element={<Tasks/>}/>
+          <Route path ="/tasks" element={<Tasks/>}/>
+          <Route path ="/team" element={<TeamForm/>}/>
+
 
           <Route path="/projects/:project_id/edit" element={<EditProjectForm/>} />
          
