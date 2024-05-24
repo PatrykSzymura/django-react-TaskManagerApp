@@ -51,6 +51,7 @@ function App() {
           <Route path ="/CreateTeam" element={<CreateTeam/>}/>
           <Route path ="/Projects" element={<Projects/>}/>
           <Route path ="/tasks" element={<Tasks/>}/>
+          <Route path ="/Users" element={<Users/>}/>
           <Route path ="/team" element={<TeamForm/>}/>
 
 
