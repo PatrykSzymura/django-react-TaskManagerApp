@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const TaskList = ({ project }) => {
@@ -34,30 +35,29 @@ const TaskList = ({ project }) => {
                 {loadingTasks ? (
                     <p>Loading tasks...</p>
                 ) : (
-                    <table className="table table-zebra">
-                        <thead>
-                            <tr>
-                                <th>Zadanie</th>
-                                <th>Opis</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {tasks.map((task) => (
-                                <tr key={task.id}>
-                                    <td>
-                                        <div className="flex items-center gap-3">
-                                            <div>
-                                                <div className="font-bold">{task.task_name}</div>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+                        {tasks.map((task) => (
+                            <div key={task.id} className='h-auto'>
+                                <Link to={`/tasks/${task.id}`}>
+                                    <div className='p-1 h-full'>
+                                        <div className='card w-full bg-base-300 shadow-xl'>
+                                            <div className='card-body'>
+                                                <h2 className='card-title'>{task.task_name}</h2>
+                                                <p>{task.description}</p>
+                                                <div className='card-actions'>
+                                                    <span
+                                                        className={`badge badge-lg bg-${task.status.color_nr} text-white`}
+                                                    >
+                                                        {task.status.status_name}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </td>
-                                    <td>{task.description}</td>
-                                    <td>{task.status}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                                    </div>
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
                 )}
             </div>
             {error && <p className="error">{error}</p>} {/* Dodane wyświetlanie błędów */}
