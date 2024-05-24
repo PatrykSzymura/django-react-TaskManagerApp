@@ -7,7 +7,7 @@ import { LoginPage , RegisPage} from "./pages/LogReg";
 import Overview from "./pages/Overview"
 import Tasks from "./pages/Tasks.jsx"
 
-import TeamForm from "./pages/forms/TeamForm.jsx"
+import TeamForm, {CreateTeam2} from "./pages/forms/TeamForm.jsx"
 import CreateTeam from './pages/CreateTeam';
 import Users from './pages/Users';
 import {
@@ -25,6 +25,7 @@ import ProjectDetail from './pages/ProjectDetail';
 import EditProjectForm from './pages/forms/EditProjectForm';
 import CreateTask from "./pages/forms/CreateTask";
 import AddTaskForm from './pages/forms/AddTaskForm.jsx';
+import PasswordChangeForm from './pages/forms/PasswordChangeForm.jsx';
 
 function App() {
   const [groups, setGroups] = useState([]);
@@ -46,12 +47,11 @@ function App() {
           <Route element={<LoginPage/>} path='/login'/>
           <Route element={<Projects/>} path='/'/>
           <Route path='/projects/:project_id' element={<ProjectDetail/>}/>
-          <Route path ="/test" element={<AddTaskForm projectId={15}/>}/>
           <Route path ="/CreateTeam" element={<CreateTeam/>}/>
           <Route path ="/Projects" element={<Projects/>}/>
           <Route path ="/tasks" element={<Tasks/>}/>
           <Route path ="/team" element={<TeamForm/>}/>
-
+          <Route path ="/test" element={<PasswordChangeForm/>}/>
 
           <Route path="/projects/:project_id/edit" element={<EditProjectForm/>} />
           <Route path="/projects/:project_id/CreateTask" element={<CreateTask/>} />

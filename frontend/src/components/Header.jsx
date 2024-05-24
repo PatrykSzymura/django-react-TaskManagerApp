@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Modal from './Modal';
 import { RegisPage } from '../pages/LogReg';
+import TeamForm from '../pages/forms/TeamForm';
 
 const logout = () => {
   localStorage.removeItem('access_token'); 
@@ -29,7 +30,8 @@ const Header = () => {
         <div className="flex gap-4">
           <Link to="/Projects" className="hover:underline">Projects</Link>
           <Modal element={<RegisPage/>} btn_Name={"create user"} modal_ID={"regis"} />
-          <Link to="/CreateTeam" className="hover:underline">Manage Teams</Link>
+          {/*<Link to="/CreateTeam" className="hover:underline">Manage Teams</Link>*/}
+          <Modal element={<TeamForm/>} btn_Name={"TeamPanel"} modal_ID={"team"} />
           <Link to="/users" className="hover:underline">Users</Link>
           <button onClick={handleLogout}> Logout</button>
         </div>) : (
