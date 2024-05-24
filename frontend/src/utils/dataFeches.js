@@ -6,6 +6,11 @@ export const getProjectsApi = async () => {
     return response
 }
 
+export const getUserList = async () => {
+    const response =  await axiosInstance('get/accountlist');
+    return response
+}
+
 export const getPriorities = async () => {
     const response = await axiosInstance('get/priorities');
     return response

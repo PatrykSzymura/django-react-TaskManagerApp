@@ -81,7 +81,7 @@ class Teamslist(models.Model):
     member10 = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='Member10', related_name='teamslist_member10_set', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'TeamsList'
 
 
