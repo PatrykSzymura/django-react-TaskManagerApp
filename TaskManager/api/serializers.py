@@ -2,9 +2,43 @@ from rest_framework.serializers import ModelSerializer as MS
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import serializers
+from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth.models import User,Group
 from django.contrib.auth.password_validation import validate_password
+from rest_framework.generics import UpdateAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
+from rest_framework.response import Response
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import check_password
 from . import models as m
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+
+class ChangePasswordView(UpdateAPIView):
+    serializer_class = ChangePasswordSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+    def update(self, request, *args, **kwargs):
+        user = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        old_password = serializer.validated_data.get('old_password')
+        new_password = serializer.validated_data.get('new_password')
+        
+        if not check_password(old_password, user.password):
+            return Response({'error': 'Old password is incorrect.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        user.set_password(new_password)
+        user.save()
+        return Response({'success': 'Password changed successfully.'}, status=status.HTTP_200_OK)
 
 #used
 class RegisterSerializer(MS):
@@ -89,11 +123,10 @@ class ProjectsSerializer(MS):
         model = m.Projects
         fields = ["id", "project_name", "team_id", "description", "status", "priority", "date_start", "date_end"]
 
-class TaskSerializer(MS):
+class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = m.Tasks
-        fields = ['id','task_name','project','worker','status','date_start','date_end']
-    status = StatusSerializer(read_only = True)
+        fields = ['id', 'task_name', 'project', 'worker', 'status', 'date_start', 'date_end','description']
 
 class AuthGroupSerializer(MS):
     class Meta:

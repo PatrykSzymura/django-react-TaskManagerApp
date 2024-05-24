@@ -1,9 +1,16 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Min
+
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated  
 from rest_framework import status, generics, viewsets
+
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.models import User
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from django.contrib.auth.hashers import make_password
 
 from . import models as mod, serializers as ser
 
@@ -40,20 +47,47 @@ class GroupByUserAPIView(generics.RetrieveAPIView):
         except Exception as e:
             return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-#:>
-@api_view(['POST', 'PUT'])
-def create_or_update_task(request):
-    if request.method == 'POST':
-        serializer = ser.TaskSerializer(data=request.data)
-    elif request.method == 'PUT':
-        task_id = request.data.get('id')
-        task_instance = mod.Tasks.objects.get(pk=task_id)
-        serializer = ser.TaskSerializer(task_instance, data=request.data)
+class ChangePasswordView(APIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = [JWTAuthentication]
 
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request):
+        user = request.user
+        old_password = request.data.get('old_password')
+        new_password = request.data.get('new_password')
+        
+        if not user.check_password(old_password):
+            return Response({'error': 'Old password is incorrect.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        user.set_password(new_password)
+        user.save()
+        return Response({'success': 'Password changed successfully.'}, status=status.HTTP_200_OK)
+
+#:>
+class TaskCreateUpdateView(APIView):
+    def post(self, request, *args, **kwargs):
+        print(request.data)
+        serializer = ser.TaskSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, *args, **kwargs):
+        task_id = request.data.get('id')
+        if not task_id:
+            return Response({"detail": "Task ID is required for updating"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            task = mod.Tasks.objects.get(id=task_id)
+        except mod.Tasks.DoesNotExist:
+            return Response({"detail": "Task not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = ser.TaskSerializer(task, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # :>
 class RegisterView(generics.CreateAPIView):
