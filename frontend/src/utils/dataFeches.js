@@ -30,3 +30,13 @@ export const getProject = async (id) => {
     const response = await axiosInstance.get(`get/projects/${id}`);
     return response;
 }
+
+export const getAccountList = async () => {
+    try {
+        const response = await axios.get('/api/get/accountlist');
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching account list:', error);
+        throw error; 
+    }
+};
