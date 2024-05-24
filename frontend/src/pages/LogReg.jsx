@@ -16,7 +16,7 @@ export const LoginPage = () => {
           password,
         });
         const { access, refresh } = response.data;
-        localStorage.setItem('access_token', access);
+        localStorage.setItem('jwtToken', access);
         localStorage.setItem('refresh_token', refresh);
         // Redirect to a protected route or handle login success
         console.log("login success",localStorage.getItem['access_token'])

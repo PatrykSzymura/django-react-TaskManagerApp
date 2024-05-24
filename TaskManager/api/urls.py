@@ -27,11 +27,12 @@ urlpatterns = [
     path('teamslist/<int:pk>/', views.teamslist_detail, name='teamlists-detail'),
     path('get/accountlist', views.getAccountList,name= "getAccountList"), # returns Array of accounts
     path('create/project', views.createProject, name='createProject'), # recives data for creation of project
-    path('tasks/', views.create_or_update_task, name='create_or_update_task'), #recives data for creating or updating task
+    path('tasks/', views.TaskCreateUpdateView.as_view(), name='task_create_update'), #recives data for creating or updating task
     path('auth-groups/', views.AuthGroupListView.as_view(), name='auth_group_list'), #returns list of permission groups
     path('user-groups/<int:user_id>/', views.GroupByUserAPIView.as_view(), name='group_by_user'),
     path('auth-user-groups/', views.AuthUserGroupsListView.as_view(), name='auth_user_groups_list'),
     path('create/project', views.createProject, name='createProject'), # recives data for creation of project
+    path('change-password/', views.ChangePasswordView.as_view(), name='change_password'),
     #=========================================================================================================================#
     #                                                   Maybe Working URLS                                                    #
     #=========================================================================================================================#

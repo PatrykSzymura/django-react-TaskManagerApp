@@ -82,6 +82,11 @@ const TeamForm = () => {
     };
 
     return (
+        <div>
+            <CreateTeam2/>
+            <hr className='py-2 border-none' />
+            <h2 className='text-center font-bold text-lg'>Manage Users in Teams</h2>
+          <hr className='py-2 border-none' />
         <form onSubmit={handleSubmit} className='grid grid-cols-5'>
             <select
                 id='teamid'
@@ -100,7 +105,7 @@ const TeamForm = () => {
                     </option>
                 ))}
             </select>
-
+            <hr className='py-2 border-none col-span-5' />
             {userList.map((user) => (
                 <React.Fragment key={user['id']}>
                     <div className='col-span-1'>
@@ -122,8 +127,46 @@ const TeamForm = () => {
                     </div>
                 </React.Fragment>
             ))}
+             <hr className='py-2 border-none col-span-5' />
             <button type="submit" className='btn btn-primary col-span-5'>Submit</button>
         </form>
+        </div>
+    );
+};
+
+export const CreateTeam2 = () => {
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('/api/teams_list/', {
+                name: name,
+            });
+            console.log(response.data);
+            // Handle success
+        } catch (error) {
+            console.error('Error:', error);
+            // Handle error
+        }
+    };
+
+    return (
+        <div className=' '>
+            <h2 className='text-center font-bold text-lg'>Edit Project</h2>
+            <hr className='py-2 border-none' />
+            <form onSubmit={handleSubmit} className='join join-horizontal grid grid-cols-6'>
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder='Team Name'
+                        className='input input-bordered col-span-5 join-item '
+                    />
+                <button type="submit" className='btn join-item btn-primary col-span-1'>Submit</button>
+            </form>
+        </div>
     );
 };
 
