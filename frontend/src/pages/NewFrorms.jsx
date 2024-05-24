@@ -70,9 +70,9 @@ export const CreateProject = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            console.log(formData);
+            //console.log(formData);
             const response = await axiosInstance.post('create/project', formData);
-            console.log('Project created successfully', response.data);
+            //console.log('Project created successfully', response.data);
             // Handle successful project creation (e.g., clear form, show success message, etc.)
         } catch (error) {
             console.error('Error creating project', error);

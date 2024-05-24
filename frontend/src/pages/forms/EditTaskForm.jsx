@@ -55,9 +55,9 @@ const handleMaxDateChange = (e) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        console.log(taskData);
+        //console.log(taskData);
         const res = await axios.put(`http://localhost:8000/api/tasks/${taskId}`, taskData);
-        console.log('Task created successfully:', res.data);
+        //console.log('Task created successfully:', res.data);
     } catch (error) {
         console.error('Error creating task:', error);
     }

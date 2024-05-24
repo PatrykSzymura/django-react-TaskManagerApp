@@ -35,7 +35,7 @@ function App() {
   const [accesLvl, setLvl] = useState(4);
 
   useEffect(() => {
-
+  //place for  implementing getting account permission lvl
   }, []);
 
   return (
@@ -61,7 +61,6 @@ function App() {
               <Route path ="/tasks" element={<Tasks/>}/>
               <Route path ="/users" element={<Users/>}/>
               <Route path ="/team" element={<TeamForm/>}/>
-              <Route path ="/test" element={<PasswordChangeForm/>}/>
             </>
           }
 

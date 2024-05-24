@@ -45,9 +45,9 @@ const AddTaskForm = ({ projectId }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log(formData);
+            //console.log(formData);
             const res = await axios.post(`http://localhost:8000/api/tasks/`, formData);
-            console.log('Task created successfully:', res.data);
+            //console.log('Task created successfully:', res.data);
         } catch (error) {
             console.error('Error creating task:', error);
         }

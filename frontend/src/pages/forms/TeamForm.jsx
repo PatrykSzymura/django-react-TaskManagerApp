@@ -71,9 +71,9 @@ const TeamForm = () => {
             // Exclude 'teamid' from formData
             const { teamid, ...formDataWithoutTeamId } = formData;
             
-            console.log('Data submitted successfully:', formDataWithoutTeamId);
+            //console.log('Data submitted successfully:', formDataWithoutTeamId);
             const response = await axiosInstance.put(`teamslist/${selectedTeam}/`, formDataWithoutTeamId);
-            console.log('Data submitted successfully:', response.data);
+            //.log('Data submitted successfully:', response.data);
             // Optionally, you can handle success here, like displaying a success message
         } catch (error) {
             console.error('Error submitting data:', error);

@@ -19,7 +19,7 @@ export const LoginPage = () => {
         localStorage.setItem('jwtToken', access);
         localStorage.setItem('refresh_token', refresh);
         // Redirect to a protected route or handle login success
-        console.log("login success",localStorage.getItem['jwtToken'])
+        //console.log("login success",localStorage.getItem['jwtToken'])
         nav("/projects")
       } catch (error) {
         console.error('Login failed:', error);
@@ -85,8 +85,8 @@ export const RegisPage = () => {
         e.preventDefault();
         try {
           const response = await axios.post('http://localhost:8000/api/register/', formData);
-          console.log('User registered successfully:', response.data);
-          console.log(formData);
+          //console.log('User registered successfully:', response.data);
+          //console.log(formData);
           // Redirect to login page or handle success
         } catch (error) {
           setErrors(error.response.data);

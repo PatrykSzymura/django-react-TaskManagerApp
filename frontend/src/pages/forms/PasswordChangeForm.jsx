@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import refreshToken from '../../utils/refreshToken'
 import axios from 'axios';
 import axiosInstance from '../../utils/axiosInstance';
+import { getAccessLevel } from '../../utils/dataFeches';
 
 const ChangePasswordForm = () => {
     const [oldPassword, setOldPassword] = useState('');
@@ -10,7 +11,10 @@ const ChangePasswordForm = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState('');
 
-    useState(()=>{refreshToken(localStorage.getItem('refresh_token'))})
+    useState(()=>{
+        refreshToken(localStorage.getItem('refresh_token'))
+        
+    })
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -22,7 +26,7 @@ const ChangePasswordForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            console.log(oldPassword)
+            //console.log(oldPassword)
             const response = await axiosInstance.post(
                 '/change-password/',
                 { old_password: oldPassword, new_password: newPassword },

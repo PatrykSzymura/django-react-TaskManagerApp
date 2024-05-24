@@ -98,7 +98,7 @@ const StatusBar = ({ proId, currStat, currPrio, statusList, priorityList }) => {
                 status: formData.status,
                 priority: formData.priority,
             });
-            console.log('Update response:', response.data);
+            //console.log('Update response:', response.data);
         } catch (error) {
             console.error('Error updating project', error);
             setError('Error updating project');
@@ -120,7 +120,7 @@ const StatusBar = ({ proId, currStat, currPrio, statusList, priorityList }) => {
             [id]: intValue,
         });
 
-        console.log('formDataChange', formData);
+        //console.log('formDataChange', formData);
     };
 
     return (
