@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Min
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny, IsAuthenticated  
@@ -11,6 +12,33 @@ from . import models as mod, serializers as ser
 class AuthGroupListView(generics.ListAPIView):
     queryset = mod.AuthGroup.objects.all().order_by('id')
     serializer_class = ser.AuthGroupSerializer
+
+class AuthUserGroupsListView(generics.ListAPIView):
+    serializer_class = ser.AuthUserGroupsSerializer
+
+    def get_queryset(self):
+        # Annotate the minimum group number for each user
+        min_group_per_user = mod.AuthUserGroups.objects.values('user').annotate(min_group=Min('group__id'))
+
+        # Filter the queryset to include only records where the group number matches the minimum group number for each user
+        queryset = mod.AuthUserGroups.objects.filter(group__id__in=min_group_per_user.values('min_group'))
+
+        return queryset
+
+class GroupByUserAPIView(generics.RetrieveAPIView):
+    serializer_class = ser.AuthUserGroupsSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        user_id = self.kwargs.get('user_id')
+        try:
+            user_group = mod.AuthUserGroups.objects.filter(user_id=user_id).first()
+            if user_group:
+                serializer = self.get_serializer(user_group)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response({"detail": "User has no associated group"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 #:>
 @api_view(['POST', 'PUT'])
