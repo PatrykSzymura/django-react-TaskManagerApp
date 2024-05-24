@@ -38,8 +38,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         print(type(user))
         # Add custom claims
         token['username'] = user.username
-        groups = user.groups.values_list('name', flat=True)
-        token['groups'] = list(groups)
+        token['id'] = user.id
         # ...
 
         return token
@@ -100,3 +99,11 @@ class AuthGroupSerializer(MS):
     class Meta:
         model = m.AuthGroup
         fields = ['id', 'name']
+
+
+class AuthUserGroupsSerializer(serializers.ModelSerializer):
+    
+
+    class Meta:
+        model = m.AuthUserGroups
+        fields = ['id', 'user', 'group']

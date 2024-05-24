@@ -36,7 +36,6 @@ function App() {
       setGroups(userGroups);
     } 
   }, []);
-  console.log(groups)
 
   return (
     <div className="App place-content-center">
@@ -47,7 +46,7 @@ function App() {
           <Route element={<LoginPage/>} path='/login'/>
           <Route element={<Projects/>} path='/'/>
           <Route path='/projects/:project_id' element={<ProjectDetail/>}/>
-          <Route path ="/test" element={<AddTaskForm/>}/>
+          <Route path ="/test" element={<AddTaskForm projectId={15}/>}/>
           <Route path ="/CreateTeam" element={<CreateTeam/>}/>
           <Route path ="/Projects" element={<Projects/>}/>
           <Route path ="/tasks" element={<Tasks/>}/>
