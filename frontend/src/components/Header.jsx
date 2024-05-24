@@ -1,4 +1,3 @@
-// src/components/Header.jsx
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Modal from './Modal';
@@ -32,7 +31,6 @@ const Header = () => {
           <Modal element={<RegisPage/>} btn_Name={"create user"} modal_ID={"regis"} />
           <Link to="/CreateTeam" className="hover:underline">Manage Teams</Link>
           <Link to="/users" className="hover:underline">Users</Link>
-          <Link to="/contact" className="hover:underline">Contact</Link>
           <button onClick={handleLogout}> Logout</button>
         </div>) : (
           <Link to="/login" className="hover:underline">Login</Link>
