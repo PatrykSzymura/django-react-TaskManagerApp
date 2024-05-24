@@ -7,7 +7,7 @@ import { LoginPage , RegisPage} from "./pages/LogReg";
 import Overview from "./pages/Overview"
 import Tasks from "./pages/Tasks.jsx"
 
-import TeamForm, {CreateTeam2} from "./pages/forms/TeamForm.jsx"
+import TeamForm, {CreateTeam2} from "./pages/forms/TeamForm.jsx";
 import CreateTeam from './pages/CreateTeam';
 import Users from './pages/Users';
 import {
