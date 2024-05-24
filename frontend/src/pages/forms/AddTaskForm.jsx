@@ -9,6 +9,7 @@ const AddTaskForm = ({ projectId }) => {
     const [maxDate, setMaxDate] = useState("");
     const [statusData, setStatusData] = useState([]);
     const [workerData, setWorkerData] = useState([]);
+    
     const [formData, setFormData] = useState({
         project : projectId,
         task_name: '',
@@ -120,7 +121,8 @@ const AddTaskForm = ({ projectId }) => {
                     min={formData.date_start}
                     value={formData.date_end} 
                     onChange={handleChange}
-                    className='input input-bordered col-span-2' 
+                    className='input input-bordered col-span-2'
+                    required 
                 />
             
                 <textarea
@@ -130,6 +132,7 @@ const AddTaskForm = ({ projectId }) => {
                     className='textarea textarea-bordered col-span-6'
                     placeholder='Description'
                     onChange={handleChange}
+                    required
                 />
             
                 <button type="submit" className='btn btn-primary col-span-6'>Create Task</button>

@@ -192,11 +192,3 @@ export const CreateProject = () => {
         </div>
     );
 };
-
-
-
-export const CreateTeam = () => {}
-
-export const DecriptionProject = () => {}
-
-export const DescriptionTask = () => {}

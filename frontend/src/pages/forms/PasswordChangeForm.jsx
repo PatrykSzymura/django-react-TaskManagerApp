@@ -39,15 +39,18 @@ const ChangePasswordForm = () => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit} className='grid grid-cols-2'>
-                <label>Old Password</label>
+        <div className='p-2'>
+            <form onSubmit={handleSubmit} className='grid grid-cols-1 gap-1 w-full'>
+                
                 <input type="password" name="old_password" value={oldPassword} onChange={handleChange} placeholder="Old Password" className="input input-bordered w-full max-w-xs "  required />
-                <label>New Password</label><label>Old Password</label>
+                
+                
                 <input type="password" name="new_password" value={newPassword} onChange={handleChange} placeholder="New Password" className="input input-bordered w-full max-w-xs"  required />
-                <label>Repeat New Password</label>
+                
+                
                 <input type="password" name="confirm_password" value={confirmPassword} onChange={handleChange} placeholder="Confirm New Password" className="input input-bordered w-full max-w-xs"  required />
-                <button type="submit" className='btn btn-primary col-span-2'>Change Password</button>
+                
+                <button type="submit" className='btn btn-primary '>Change Password</button>
             </form>
             {message && <p>{message}</p>}
         </div>

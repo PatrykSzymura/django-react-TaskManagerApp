@@ -14,7 +14,7 @@ export default function About() {
                         We're thrilled to have you here at Task Manager, your go-to destination 
                         for efficient task management and productivity! 
                     </p>
-                <Link to='/sign-in'>
+                <Link to='/login'>
                 
                     <span className='btn btn-primary'>Sign In</span>
                 

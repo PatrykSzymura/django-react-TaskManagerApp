@@ -26,16 +26,16 @@ import EditProjectForm from './pages/forms/EditProjectForm';
 import CreateTask from "./pages/forms/CreateTask";
 import AddTaskForm from './pages/forms/AddTaskForm.jsx';
 import PasswordChangeForm from './pages/forms/PasswordChangeForm.jsx';
+import { getIq } from './utils/dataFeches.js';
+import refreshToken from './utils/refreshToken.jsx';
+import EditTaskForm from './pages/forms/EditTaskForm.jsx';
+
 
 function App() {
-  const [groups, setGroups] = useState([]);
+  const [accesLvl, setLvl] = useState(4);
 
   useEffect(() => {
-    const token = localStorage.getItem('token'); // or however you store your JWT
-    if (token) {
-      const userGroups = getGroupsFromToken(token);
-      setGroups(userGroups);
-    } 
+
   }, []);
 
   return (
@@ -43,20 +43,32 @@ function App() {
       <Router>
         <Header/>
         <Routes>
-        
-          <Route element={<LoginPage/>} path='/login'/>
-          <Route element={<Projects/>} path='/'/>
-          <Route path='/projects/:project_id' element={<ProjectDetail/>}/>
-          <Route path ="/CreateTeam" element={<CreateTeam/>}/>
-          <Route path ="/Projects" element={<Projects/>}/>
-          <Route path ="/tasks" element={<Tasks/>}/>
-          <Route path ="/Users" element={<Users/>}/>
-          <Route path ="/team" element={<TeamForm/>}/>
-          <Route path ="/test" element={<PasswordChangeForm/>}/>
+        {/*Public accces*/}
+        {(typeof localStorage['jwtToken'] != "undefined") ? <Route element={<Projects/>} path='/'/> : <Route path='/' element={<Overview/>}/>  }
+        <Route element={<LoginPage/>} path='/login'/>
+        <Route element={<EditTaskForm/>} path='/test'/>
 
-          <Route path="/projects/:project_id/edit" element={<EditProjectForm/>} />
-          <Route path="/projects/:project_id/CreateTask" element={<CreateTask/>} />
-         
+        {/*Restricted accces*/}
+          <Route element={<PrivateRoutes/>}>
+            
+            
+            <Route path='/projects/:project_id' element={<ProjectDetail/>}/>
+            { 
+            (accesLvl < 4) ? <>
+
+            </> : <>
+            <Route path ="/CreateTeam" element={<CreateTeam/>} />
+              <Route path ="/tasks" element={<Tasks/>}/>
+              <Route path ="/users" element={<Users/>}/>
+              <Route path ="/team" element={<TeamForm/>}/>
+              <Route path ="/test" element={<PasswordChangeForm/>}/>
+            </>
+          }
+
+            <Route path="/projects/:project_id/edit" element={<EditProjectForm/>} />
+            <Route path="/projects/:project_id/CreateTask" element={<CreateTask/>} />
+          </Route>
+         <Route path='*' element={<Navigate to = '/'/>}/>
         </Routes>
       </Router>
     </div>

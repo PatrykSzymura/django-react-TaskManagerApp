@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FaCog } from "react-icons/fa";
 import { FaWrench } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import { getProject, getPriorities, getTeam, getStatus } from "../utils/dataFeches";
+import { getProject, getPriorities, getTeams, getStatus } from "../utils/dataFeches";
 import axiosInstance from "../utils/axiosInstance";
 import Modal from "../components/Modal";
 import EditProjectForm from "./forms/EditProjectForm";
@@ -26,12 +26,11 @@ const ProjectDetail = () => {
                 const projectResponse = await getProject(params["project_id"]);
                 const PriorityResponse = await getPriorities();
                 const StatusResponse = await getStatus();
-                const TeamsResponse = await getTeam();
+                const TeamsResponse = await getTeams();
                 setProject(projectResponse.data);
                 setPriority(PriorityResponse.data);
                 setStatus(StatusResponse.data);
                 setTeamsData(TeamsResponse.data);
-                console.log("responseBitch")
             } catch (error) {
                 console.error('Error fetching data', error);
             }
