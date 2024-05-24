@@ -30,7 +30,7 @@ const Header = () => {
           <Link to="/Projects" className="hover:underline">Projects</Link>
           <Modal element={<RegisPage/>} btn_Name={"create user"} modal_ID={"regis"} />
           <Link to="/CreateTeam" className="hover:underline">Manage Teams</Link>
-          <Link to="/users" className="hover:underline">Users</Link>
+          <Link to="/Users" className="hover:underline">Users</Link>
           <button onClick={handleLogout}> Logout</button>
         </div>) : (
           <Link to="/login" className="hover:underline">Login</Link>
