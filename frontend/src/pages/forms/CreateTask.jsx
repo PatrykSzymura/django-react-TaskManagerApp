@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import axiosInstance from '../../utils/axiosInstance';
-import { getStatus, getAccountList } from '../../utils/dataFeches'; // Załóżmy, że istnieje funkcja getAccountList do pobierania listy użytkowników.
+import { getStatus, getUserList } from '../../utils/dataFeches'; 
 
 const CreateTask = () => {
     const [task, setTask] = useState({
@@ -10,7 +10,7 @@ const CreateTask = () => {
         status: '',
         date_start: '',
         date_end: '',
-        assigned_to: '', // Dodane pole dla przydzielonego użytkownika
+        assigned_to: '', 
     });
 
     const [statusData, setStatusData] = useState([]);
@@ -23,7 +23,7 @@ const CreateTask = () => {
                 const statusResponse = await getStatus();
                 setStatusData(statusResponse.data);
                 
-                const userListResponse = await getAccountList(); // Pobranie listy użytkowników
+                const userListResponse = await getUserList();
                 setUserList(userListResponse.data);
             } catch (error) {
                 console.error('Error fetching data', error);
@@ -40,7 +40,8 @@ const CreateTask = () => {
             [name]: value
         }));
     };
-
+    
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -126,10 +127,10 @@ const CreateTask = () => {
                         Select Assigned User
                     </option>
                     {userList.map((user) => (
-                        <option key={user['id']} value={user['id']}>
-                            {user['name']}
-                        </option>
-                    ))}
+                    <option key={user['id']} value={user['id']}>
+                    {user['username']} {user['first_name']} {user['last_name']}
+                    </option>
+                ))}
                 </select>
 
                 <button type="submit" className='btn btn-primary col-span-6'>Save</button>
