@@ -23,6 +23,7 @@ import getGroupsFromToken from './utils/axiosInstance';
 import { CreateProject } from './pages/NewFrorms';
 import ProjectDetail from './pages/ProjectDetail';
 import EditProjectForm from './pages/forms/EditProjectForm';
+import CreateTask from "./pages/forms/CreateTask";
 
 function App() {
   const [groups, setGroups] = useState([]);
@@ -53,6 +54,7 @@ function App() {
 
 
           <Route path="/projects/:project_id/edit" element={<EditProjectForm/>} />
+          <Route path="/projects/:project_id/CreateTask" element={<CreateTask/>} />
          
         </Routes>
       </Router>

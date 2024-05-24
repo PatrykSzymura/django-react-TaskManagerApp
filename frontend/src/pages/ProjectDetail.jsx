@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { FaCog } from "react-icons/fa";
+import { FaWrench } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { getProject, getPriorities, getTeam, getStatus } from "../utils/dataFeches";
 import axiosInstance from "../utils/axiosInstance";
 import Modal from "../components/Modal";
 import EditProjectForm from "./forms/EditProjectForm";
+import CreateTask from "./forms/CreateTask";
 
 const ProjectDetail = () => {
     const [project, setProject] = useState(null);
@@ -60,7 +62,8 @@ const DataBar = ({project,st,pr}) => {
             <div className="font-semibold">Start Date : {project['date_start']}</div>
             <div className="font-semibold">End Date : {project['date_end']}</div>
             <div className="col-end-11">
-                <Modal element={<EditProjectForm/>} btn_Name={<FaCog />} btn_Style={"btn btn-base-200 text-3xl"} modal_ID={"Edit"}/>
+                <Modal element={<EditProjectForm/>} btn_Name={<FaCog />} btn_Style={"btn btn-base-200 text-3xl mr-2"} modal_ID={"Edit"}/>
+                <Modal element={<CreateTask/>} btn_Name={<FaWrench/>} btn_Style={"btn btn-base-200 text-3xl"} modal_ID={"Create"}/>
             </div>
             
         </div>

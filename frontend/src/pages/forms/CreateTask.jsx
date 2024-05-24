@@ -1,0 +1,99 @@
+import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
+import axios from 'axios';
+import axiosInstance from '../../utils/axiosInstance';
+import {getStatus, } from '../../utils/dataFeches';
+
+const CreateTask = () => {
+    const [task, setTask] = useState({
+        task_name: '',
+        description: '',
+        status: '',
+    });
+
+    const [statusData, setStatusData] = useState([]);
+
+    const params = useParams();
+
+    useEffect(() => {
+        const fetchStatus = async () => {
+            try {
+                const statusResponse = await getStatus();
+                setStatusData(statusResponse.data);
+            } catch (error) {
+                console.error('Error fetching status data', error);
+            }
+        };
+
+        fetchStatus();
+    }, []);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setTask(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axiosInstance.post(`/api/create/task`, { ...task, project_id: params.project_id });
+            alert('Task created successfully!');
+            
+        } catch (error) {
+            console.error("There was an error creating the task!", error);
+        }
+    };
+
+    return (
+        <div className='main'>
+            <h2 className='text-center font-bold text-lg'>Create Task</h2>
+            <hr className='py-2 border-none' />
+            <form onSubmit={handleSubmit} className='grid grid-cols-6 gap-2'>
+
+                <input 
+                    type="text" 
+                    name="task_name" 
+                    value={task.task_name} 
+                    className='input input-bordered col-span-6'
+                    onChange={handleChange} 
+                    placeholder="Task Name"
+                    required
+                />
+
+                <textarea 
+                    type="textarea" 
+                    name="description"
+                    value={task.description} 
+                    onChange={handleChange}
+                    className='textarea textarea-bordered col-span-6' 
+                    placeholder="Description"
+                />
+
+                <select
+                    id='status'
+                    name="status" 
+                    className='select select-bordered col-span-6'
+                    value={task.status} 
+                    onChange={handleChange}
+                    required
+                >
+                    <option disabled selected>
+                        Select Status
+                        </option>
+                            {statusData.map((status) => (
+                                <option key={status['id']} value={status['id']}>
+                            {status['status_name']}
+                    </option>
+                    ))}
+                </select>
+
+                <button type="submit" className='btn btn-primary col-span-6'>Save</button>
+            </form>
+        </div>
+    );
+};
+
+export default CreateTask;
