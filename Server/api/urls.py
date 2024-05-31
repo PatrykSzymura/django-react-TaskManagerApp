@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth import views as auth_views
 from rest_framework_simplejwt.views import TokenVerifyView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -14,6 +15,8 @@ urlpatterns = [
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('auth/', include('rest_framework.urls')),
 
+    #path('change_password/', auth_views.PasswordResetView.as_view(), name='change_password'),
+    path('user/change_password/<int:pk>/', v.ChangePassword.as_view(), name='auth_change_password'),
     path('user/all/', v.UserListView.as_view(), name='user_list'),
     path('user/register/', v.CreateUserView.as_view(), name='user_register'),
     path('user/delete/<int:pk>/', v.UserDeleteView.as_view(), name='user_delete'),

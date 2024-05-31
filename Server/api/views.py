@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
+
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.exceptions import PermissionDenied
 from api import models as m
 
 from api.serializers import UserSerializer, ProjectSerializer, TaskSerializer, StatusSerializer, ListTeamsSerializer, \
-    TeamsNameSerializer, PrioritySerializer
+    TeamsNameSerializer, PrioritySerializer, ChangePasswordSerializer, UserUpdateSerializer
 
 
 # Create your views here.
@@ -14,17 +15,18 @@ class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     #permission_classes = [AllowAny]
+    #Q@wertyuiop1
 
 
 class UserListView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (IsAuthenticated,)
+    #permission_classes = (IsAuthenticated,)
 
 
 class UserUpdateView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserUpdateSerializer
     #permission_classes = [IsAuthenticated]
 
 
@@ -35,10 +37,13 @@ class UserDeleteView(generics.DestroyAPIView):
     #permission_classes = [IsAuthenticated]
 
     def perform_destroy(self, instance):
-        # Check if the user trying to delete themselves is a staff member
-        if self.request.user.is_staff and self.request.user == instance:
-            raise PermissionDenied("Staff members cannot delete themselves.")
-        instance.delete()
+        #print(instance)
+        if instance.is_staff or instance.is_superuser:
+            #print('Im super user or staff user')
+            raise PermissionDenied("Staff members cannot delete staff users or super users.")
+        else:
+            #print('Im not admin user or super user')
+            instance.delete()
 
 
 class ProjectListCreate(generics.ListCreateAPIView):
@@ -141,3 +146,9 @@ class ListTeamsProjects(generics.ListAPIView):
 
     def get_queryset(self):
         return m.ListTeams.objects.filter(team_id=self.kwargs['pk'])
+
+
+class ChangePassword(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ChangePasswordSerializer
