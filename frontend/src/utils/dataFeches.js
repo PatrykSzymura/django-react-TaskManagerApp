@@ -3,44 +3,44 @@ import axios from 'axios';
 import refreshToken from "./refreshToken";
 
 export const getProjectsApi = async () => {
-    const response = await axiosInstance('get/projects');
+    const response = await axiosInstance('project/');
     return response
 }
 
 export const getUserList = async () => {
-    const response =  await axiosInstance('get/accountlist');
+    const response =  await axiosInstance('user/all/');
     return response
 }
 
 export const getPriorities = async () => {
-    const response = await axiosInstance('get/priorities');
+    const response = await axiosInstance('priority/');
     return response
 }
 
 export const getTeams = async () => {
-    const response = await axiosInstance('teams/');
+    const response = await axiosInstance('team/');
     return response
 }
 
 export const getStatus = async () => {
-    const response = await axiosInstance('get/statuses');
+    const response = await axiosInstance('status/');
     return response
 }
 
 export const getProject = async (id) => {
-    const response = await axiosInstance.get(`get/projects/${id}`);
+    const response = await axiosInstance.get(`projects/${id}`);
     return response;
 }
 
-export const getAccountList = async () => {
-    try {
-        const response = await axios.get('/api/get/accountlist');
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching account list:', error);
-        throw error; 
-    }
-};
+// export const getAccountList = async () => {
+//     try {
+//         const response = await axios.get('/api/get/accountlist');
+//         return response.data;
+//     } catch (error) {
+//         console.error('Error fetching account list:', error);
+//         throw error; 
+//     }
+// };
 
 export const getIq = async () => {
     try {
