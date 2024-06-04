@@ -22,7 +22,7 @@ const UserList = () => {
 
         const fetchTeams = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/teams');
+                const response = await axios.get('http://localhost:8000/api/team');
                 setTeams(response.data.teams);
             } catch (error) {
                 console.error('Error fetching teams:', error);
