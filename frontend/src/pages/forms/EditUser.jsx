@@ -19,7 +19,7 @@ const EditUser = ({ user, onSuccess }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axiosInstance.put(`/api/edit/user/${user.id}`, formData);
+            await axiosInstance.put(`/user/update/${user.id}`, formData);
             onSuccess(); // Wywołanie callbacka po udanej edycji
         } catch (error) {
             console.error('Error updating user', error);
