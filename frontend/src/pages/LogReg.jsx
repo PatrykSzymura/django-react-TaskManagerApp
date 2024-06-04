@@ -85,9 +85,10 @@ export const RegisPage = () => {
         e.preventDefault();
         try {
           const response = await axios.post('http://localhost:8000/api/user/register/', formData);
-          //console.log('User registered successfully:', response.data);
+          console.log('User registered successfully:', response.data);
           //console.log(formData);
           // Redirect to login page or handle success
+          window.location.reload();
         } catch (error) {
           setErrors(error.response.data);
         }
