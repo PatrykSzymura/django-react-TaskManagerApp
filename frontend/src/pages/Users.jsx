@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getUserList } from '../utils/dataFeches';
 import axiosInstance from '../utils/axiosInstance';
 import { FaCog } from "react-icons/fa";
+import { AiFillDelete } from "react-icons/ai";
 import Modal from "../components/Modal";
 import EditUser from "./forms/EditUser"; // Poprawiony import
 
@@ -29,7 +30,7 @@ const UserList = () => {
 
     const handleDelete = async (userId) => {
         try {
-            await axiosInstance.delete(`team/memebers/delete/${userId}`);
+            await axiosInstance.delete(`/user/delete/${userId}`);
             setUsers(users.filter(user => user.id !== userId));
         } catch (error) {
             setError(error.message);
@@ -70,10 +71,10 @@ const UserList = () => {
                             <td>{user.username}</td>
                             <td>{user.first_name}</td>
                             <td>
-                                {/* <button className="btn btn-base-200 text-2xl mr-2" onClick={() => openModal(user)}>
+                                {<button className="btn btn-info text-2xl mr-2" onClick={() => openModal(user)}>
                                     <FaCog />
-                                </button> */}
-                                <button className="btn btn-error" onClick={() => handleDelete(user.id)}>Delete</button>
+                                </button>}
+                                <button className="btn btn-error text-2xl mr-2" onClick={() => handleDelete(user.id)}><AiFillDelete /></button>
                             </td>
                         </tr>
                     ))}
