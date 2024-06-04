@@ -84,7 +84,7 @@ export const RegisPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const response = await axios.post('http://localhost:8000/api/register/', formData);
+          const response = await axios.post('http://localhost:8000/api/user/register/', formData);
           //console.log('User registered successfully:', response.data);
           //console.log(formData);
           // Redirect to login page or handle success
@@ -95,7 +95,7 @@ export const RegisPage = () => {
     
     return (
         <div>
-        <h2 className='text-center font-bold text-lg'>Add New Project</h2>
+        <h2 className='text-center font-bold text-lg'>Add New User</h2>
           <hr className='py-2 border-none' />
         <form onSubmit={handleSubmit} className='card grid grid-cols-2 gap-1 text-xl w-full p-3'>
             
