@@ -29,7 +29,7 @@ const UserList = () => {
 
     const handleDelete = async (userId) => {
         try {
-            await axiosInstance.delete(`/api/delete/user/${userId}`);
+            await axiosInstance.delete(`team/memebers/delete/${userId}`);
             setUsers(users.filter(user => user.id !== userId));
         } catch (error) {
             setError(error.message);
