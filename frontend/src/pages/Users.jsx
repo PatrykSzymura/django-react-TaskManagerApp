@@ -3,15 +3,16 @@ import { getUserList } from '../utils/dataFeches';
 import axiosInstance from '../utils/axiosInstance';
 import { FaCog } from "react-icons/fa";
 import { AiFillDelete } from "react-icons/ai";
-import Modal from "../components/Modal";
-import EditUser from "./forms/EditUser"; // Poprawiony import
+import Modal from "../components/Modal2";
+import EditUser from "./forms/EditUser";
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [showModal, setShowModal] = useState(false); // Dodanie stanu modala
-    const [selectedUser, setSelectedUser] = useState(null); // Dodanie stanu wybranego użytkownika
+    const [deleteError, setDeleteError] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false); // Zmiana stanu modala na boolean
+    const [selectedUser, setSelectedUser] = useState(null);
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -29,11 +30,12 @@ const UserList = () => {
     }, []);
 
     const handleDelete = async (userId) => {
+        setDeleteError(null);
         try {
-            await axiosInstance.delete(`/user/delete/${userId}`);
+            await axiosInstance.delete(`/api/user/delete/${userId}/`);
             setUsers(users.filter(user => user.id !== userId));
         } catch (error) {
-            setError(error.message);
+            setDeleteError("Tego użytkownika nie można usunąć");
         }
     };
 
@@ -41,7 +43,7 @@ const UserList = () => {
         try {
             const response = await getUserList();
             setUsers(response.data);
-            setShowModal(false); // Zamknięcie modala po sukcesie edycji
+            setIsModalOpen(false); // Zamknięcie modala po sukcesie edycji
         } catch (error) {
             setError(error.message);
         }
@@ -49,7 +51,11 @@ const UserList = () => {
 
     const openModal = (user) => {
         setSelectedUser(user);
-        setShowModal(true);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
     };
 
     if (loading) return <p>Loading...</p>;
@@ -71,9 +77,9 @@ const UserList = () => {
                             <td>{user.username}</td>
                             <td>{user.first_name}</td>
                             <td>
-                                {<button className="btn btn-info text-2xl mr-2" onClick={() => openModal(user)}>
+                                <button className="btn btn-info text-2xl mr-2" onClick={() => openModal(user)}>
                                     <FaCog />
-                                </button>}
+                                </button>
                                 <button className="btn btn-error text-2xl mr-2" onClick={() => handleDelete(user.id)}><AiFillDelete /></button>
                             </td>
                         </tr>
@@ -81,13 +87,21 @@ const UserList = () => {
                 </tbody>
             </table>
 
-            {showModal && selectedUser && (
+            {isModalOpen && selectedUser && (
                 <Modal
                     element={<EditUser user={selectedUser} onSuccess={handleEditSuccess} />}
                     btn_Name={null}
                     btn_Style={null}
                     modal_ID={`Edit-${selectedUser.id}`}
+                    isOpen={isModalOpen}
+                    onClose={closeModal}
                 />
+            )}
+
+            {deleteError && (
+                <div className="alert alert-error mt-4">
+                    <p>{deleteError}</p>
+                </div>
             )}
         </div>
     );
