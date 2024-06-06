@@ -38,7 +38,7 @@ const TeamForm = () => {
 
     const handleChange = (e) => {
         const { name, value, checked } = e.target;
-        if (name === "teamid") {
+        if (name === "team_id") {
             const intValue = parseInt(value, 10);
             setSelectedTeam(intValue);
         } else {
@@ -100,8 +100,8 @@ const TeamForm = () => {
                     Select Team
                 </option>
                 {teamList.map((team) => (
-                    <option key={team['teamid']} value={team['teamid']}>
-                        {team['teamname']}
+                    <option key={team['team_id']} value={team['team_id']}>
+                        {team['team_name']}
                     </option>
                 ))}
             </select>
