@@ -17,7 +17,7 @@ export const AddProjectForm = () => {
 
     const [formData, setFormData] = useState({
         project_name: "",
-        team_id: "",
+        team: "",
         description: "",
         status: 0,
         priority: "",
@@ -44,7 +44,7 @@ export const AddProjectForm = () => {
     const handleChange = (e) => {
         const { id, value } = e.target;
 
-        if (id === "team_id") {
+        if (id === "team") {
             const intValue = parseInt(value, 10);
             setSelectedTeam(intValue);
             setFormData({
@@ -71,7 +71,7 @@ export const AddProjectForm = () => {
         setLoading(true);
         try {
             console.log(formData);
-            const response = await axiosInstance.post('/project', formData); //create projeckt
+            const response = await axiosInstance.post('/project/', formData); //create projeckt
             console.log('Project created successfully', response.data);
             // Handle successful project creation (e.g., clear form, show success message, etc.)
         } catch (error) {
@@ -116,7 +116,7 @@ export const AddProjectForm = () => {
     
             {/* Project-Team-Select */}
             <select
-              id='team_id'
+              id='team'
               className='select select-bordered col-span-3'
               value={selectedTeam}
               onChange={handleChange}
@@ -126,8 +126,8 @@ export const AddProjectForm = () => {
                 Select Team
               </option>
               {teamsData.map((team) => (
-                <option key={team['teamid']} value={team['teamid']}>
-                    {team['teamname']}
+                <option key={team['team_id']} value={team['team_id']}>
+                    {team['team_name']}
                 </option>
               ))}
             </select>
