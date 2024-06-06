@@ -8,7 +8,6 @@ import Overview from "./pages/Overview"
 import Tasks from "./pages/Tasks.jsx"
 
 import TeamForm, {CreateTeam2} from "./pages/forms/TeamForm.jsx";
-import CreateTeam from './pages/CreateTeam';
 import Users from './pages/Users';
 import {
   BrowserRouter as Router,
@@ -57,7 +56,6 @@ function App() {
             (accesLvl < 4) ? <>
 
             </> : <>
-            <Route path ="/CreateTeam" element={<CreateTeam/>} />
               <Route path ="/tasks" element={<Tasks/>}/>
               <Route path ="/users" element={<Users/>}/>
               <Route path ="/team" element={<TeamForm/>}/>
