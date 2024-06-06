@@ -71,7 +71,7 @@ export const AddProjectForm = () => {
         setLoading(true);
         try {
             console.log(formData);
-            const response = await axiosInstance.post('create/project', formData);
+            const response = await axiosInstance.post('/project', formData); //create projeckt
             console.log('Project created successfully', response.data);
             // Handle successful project creation (e.g., clear form, show success message, etc.)
         } catch (error) {
