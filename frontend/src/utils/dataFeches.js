@@ -28,7 +28,7 @@ export const getStatus = async () => {
 }
 
 export const getProject = async (id) => {
-    const response = await axiosInstance.get(`projects/${id}`);
+    const response = await axiosInstance.get(`project/update/${id}`);
     return response;
 }
 
