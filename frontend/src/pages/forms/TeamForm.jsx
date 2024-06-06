@@ -72,7 +72,7 @@ const TeamForm = () => {
             const { teamid, ...formDataWithoutTeamId } = formData;
             
             //console.log('Data submitted successfully:', formDataWithoutTeamId);
-            const response = await axiosInstance.put(`teamslist/${selectedTeam}/`, formDataWithoutTeamId);
+            const response = await axiosInstance.put(`team/members/update/${selectedTeam}/`, formDataWithoutTeamId);
             //.log('Data submitted successfully:', response.data);
             // Optionally, you can handle success here, like displaying a success message
         } catch (error) {
@@ -141,7 +141,7 @@ export const CreateTeam2 = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/api/teams_list/', {
+            const response = await axios.post('/api/team/update', {
                 name: name,
             });
             console.log(response.data);
@@ -154,7 +154,7 @@ export const CreateTeam2 = () => {
 
     return (
         <div className=' '>
-            <h2 className='text-center font-bold text-lg'>Edit Project</h2>
+            <h2 className='text-center font-bold text-lg'>Edit Team</h2>
             <hr className='py-2 border-none' />
             <form onSubmit={handleSubmit} className='join join-horizontal grid grid-cols-6'>
                     <input
@@ -164,7 +164,7 @@ export const CreateTeam2 = () => {
                         placeholder='Team Name'
                         className='input input-bordered col-span-5 join-item '
                     />
-                <button type="submit" className='btn join-item btn-primary col-span-1'>Submit</button>
+                <button type="submit" className='btn join-item btn-primary col-span-1'>Create</button>
             </form>
         </div>
     );
