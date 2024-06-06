@@ -14,7 +14,7 @@ const AddTaskForm = ({ projectId }) => {
         project : projectId,
         task_name: '',
         status: 1,
-        worker: '',
+        user_id: '',
         date_start: '',
         date_end: '',
         description: '',
@@ -87,10 +87,10 @@ const AddTaskForm = ({ projectId }) => {
                 </select>
 
                 <select
-                    id="worker"
-                    name="worker"
+                    id="user_id"
+                    name="user_id"
                     className='select select-bordered col-span-3'
-                    value={formData.worker}
+                    value={formData.user_id}
                     onChange={handleChange}
                     required
                 >
