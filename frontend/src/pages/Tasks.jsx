@@ -10,7 +10,7 @@ const TaskList = ({ project }) => {
     const fetchTasks = async (projectId) => {
         setLoadingTasks(true);
         try {
-            const response = await axios.get(`http://localhost:8000/api/get/tasks/${projectId}`);
+            const response = await axios.get(`http://localhost:8000/api/task/${projectId}`);
             console.log("Fetched tasks:", response.data); // Dodane logowanie
             setTasks(response.data);
         } catch (error) {
