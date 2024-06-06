@@ -19,7 +19,7 @@ export const AddProjectForm = () => {
         project_name: "",
         team: "",
         description: "",
-        status: 0,
+        status: 6,
         priority: "",
         date_start: "",
         date_end: ""
