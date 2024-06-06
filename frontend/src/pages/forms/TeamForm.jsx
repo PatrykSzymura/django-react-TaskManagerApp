@@ -72,7 +72,7 @@ const TeamForm = () => {
             const { teamid, ...formDataWithoutTeamId } = formData;
             
             //console.log('Data submitted successfully:', formDataWithoutTeamId);
-            const response = await axiosInstance.put(`team/members/update/${selectedTeam}/`, formDataWithoutTeamId);
+            const response = await axiosInstance.put(`team/members/${selectedTeam}/`, formDataWithoutTeamId);
             //.log('Data submitted successfully:', response.data);
             // Optionally, you can handle success here, like displaying a success message
         } catch (error) {
@@ -141,10 +141,11 @@ export const CreateTeam2 = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/api/team/update', {
+            const response = await axios.post('/api/team', {
                 name: name,
             });
             console.log(response.data);
+            setName('');
             // Handle success
         } catch (error) {
             console.error('Error:', error);
