@@ -34,7 +34,7 @@ const EditProjectForm = () => {
     useEffect(() => {
         const fetchData = async () =>{
             try {
-                axiosInstance.get(`projects/${params["project_id"]}/`)
+                axiosInstance.get(`project/update/${params["project_id"]}/`)
                 .then(response => {
                     setProject(response.data);
                 })
@@ -66,7 +66,7 @@ const EditProjectForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axiosInstance.put(`projects/${params["project_id"]}/`, project)
+        axiosInstance.put(`projects/update/${params["project_id"]}/`, project)
             .then(response => {
                 alert('Project updated successfully!');
             })
