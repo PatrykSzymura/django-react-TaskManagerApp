@@ -11,7 +11,7 @@ const EditProjectForm = () => {
     const [statusData, setStatusData] = useState([]);
     const [project, setProject] = useState({
         project_name: '',
-        team_id: '',
+        team: '',
         priority: '',
         status: '',
         date_start: '',
@@ -66,7 +66,7 @@ const EditProjectForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axiosInstance.put(`projects/update/${params["project_id"]}/`, project)
+        axiosInstance.put(`project/update/${params["project_id"]}/`, project)
             .then(response => {
                 alert('Project updated successfully!');
             })
@@ -91,10 +91,10 @@ const EditProjectForm = () => {
                 />
 
                 <select
-                id='team_id'
-                name="team_id" 
+                id='team'
+                name="team" 
                 className='select select-bordered col-span-2'
-                value={project.team_id}
+                value={project.team}
                 onChange={handleChange}
                 required
                 >
@@ -102,8 +102,8 @@ const EditProjectForm = () => {
                     Select Team
                 </option>
                 {teamsData.map((team) => (
-                    <option key={team['teamid']} value={team['teamid']}>
-                        {team['teamname']}
+                    <option key={team['team_id']} value={team['team_id']}>
+                        {team['team_name']}
                     </option>
                 ))}
                 </select>
