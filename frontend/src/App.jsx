@@ -31,10 +31,24 @@ import EditTaskForm from './pages/forms/EditTaskForm.jsx';
 
 
 function App() {
-  const [accesLvl, setLvl] = useState(4);
+  const [accesLvl, setAccessLvl] = useState(4);
 
   useEffect(() => {
-  //place for  implementing getting account permission lvl
+    const fetchAccessLevel = async () => {
+      if (localStorage['jwtToken']) {
+        try {
+          const token = localStorage['jwtToken'];
+          const decodedToken = await getGroupsFromToken(token);
+          setAccessLvl(decodedToken.accessLvl); // Assuming the decoded token has an accessLvl field
+        } catch (error) {
+          console.error("Failed to fetch access level:", error);
+          // Handle error, maybe set accessLvl to a default value
+          setAccessLvl(4);
+        }
+      }
+    };
+
+    fetchAccessLevel();
   }, []);
 
   return (
