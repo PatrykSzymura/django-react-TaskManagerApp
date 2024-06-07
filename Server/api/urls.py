@@ -30,16 +30,15 @@ urlpatterns = [
     path('project/update/<int:pk>/', v.ProjectUpdate.as_view(), name='project_update'),
     path('project/members/<int:pk>/', v.ListTeamsProjects.as_view(), name='project_members'),
 
-    path('task/<int:pk>', v.TaskListCreate.as_view(), name='task_list_create'),
+    path('task/<int:pk>/', v.TaskListCreate.as_view(), name='task_list_create'),
     path('task/delete/<int:pk>/', v.TaskDelete.as_view(), name='task_delete'),
     path('task/update/<int:pk>/', v.TaskUpdate.as_view(), name='task_update'),
-
 
     path('team/', v.TeamsNameListCreate.as_view(), name='teams_list_create'),
     path('team/delete/<int:pk>/', v.TeamsNameDelete.as_view(), name='teams_delete'),
     path('team/update/<int:pk>/', v.TeamsNameUpdate.as_view(), name='teams_update'),
 
-    path('team/members/<int:pk>', v.ListTeamsList.as_view(), name='list_teams_list'),
+    path('team/members/<int:pk>/', v.ListTeamsList.as_view(), name='list_teams_list'),
     path('team/members/update/<int:pk>/', v.ListTeamsUpdate.as_view(), name='list_teams_update'),
     path('team/memebers/delete/<int:pk>/', v.ListTeamsDelete.as_view(), name='list_teams_delete'),
 ]
