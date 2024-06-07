@@ -38,7 +38,7 @@ const TaskList = ({ project }) => {
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                         {tasks.map((task) => (
                             <div key={task.id} className='h-auto'>
-                                <Link to={`/tasks/${task.id}`}>
+                                <Link to={`/EditTask/${task.id}`}>
                                     <div className='p-1 h-full'>
                                         <div className='card w-full bg-base-300 shadow-xl'>
                                             <div className='card-body'>
