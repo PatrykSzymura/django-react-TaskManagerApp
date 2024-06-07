@@ -6,6 +6,7 @@ import PrivateRoutes from './utils/PrivateRoutes'
 import { LoginPage , RegisPage} from "./pages/LogReg";
 import Overview from "./pages/Overview"
 import Tasks from "./pages/Tasks.jsx"
+import Home from "./pages/Home.jsx"
 
 import TeamForm, {CreateTeam2} from "./pages/forms/TeamForm.jsx";
 import Users from './pages/Users';
@@ -44,6 +45,7 @@ function App() {
         <Routes>
         {/*Public accces*/}
         {(typeof localStorage['jwtToken'] != "undefined") ? <Route element={<Projects/>} path='/'/> : <Route path='/' element={<Overview/>}/>  }
+        <Route element={<Home/>} path='/Home'/>
         <Route element={<LoginPage/>} path='/login'/>
         <Route element={<EditTaskForm/>} path='/test'/>
 
