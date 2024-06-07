@@ -32,7 +32,12 @@ class TaskAdmin(admin.ModelAdmin):
 
 
 class ListTeamsAdmin(admin.ModelAdmin):
-    list_display = ('id',)
+    list_display = ('id', 'team_id', 'user_id')
+
+    list_filter = ('team_id', 'user_id')
+
+    def __str__(self):
+        return str(self.team_id)
 
 
 admin.site.register(TeamsName, TeamsNameAdmin)
@@ -40,4 +45,4 @@ admin.site.register(Status, StatusAdmin)
 admin.site.register(Priority, PriorityAdmin)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Task, TaskAdmin)
-admin.site.register(ListTeams, ListTeamsAdmin)
+#admin.site.register(ListTeams, ListTeamsAdmin)

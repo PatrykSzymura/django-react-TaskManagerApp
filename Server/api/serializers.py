@@ -11,13 +11,20 @@ class MyTokenObtainPairSerializer(TopSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
+        #groups = user.groups.all().values('id', 'name')
+        #access_Level = groups[0]['id']
 
-        token['name'] = user.name
-        token['email'] = user.email
-        token['first_name'] = user.first_name
-        token['last_name'] = user.last_name
-        token['access_Level'] = user.access_level
+        access_Level = 4
+        if user.is_superuser:
+            access_Level = 1
+        elif user.is_staff:
+            access_Level = 2
+        else:
+            access_Level = 3
 
+        token['access_Level'] = access_Level
+
+        #print(groups[0]['id'])
         return token
 
 

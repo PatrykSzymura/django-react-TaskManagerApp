@@ -38,7 +38,7 @@ class UserDeleteView(generics.DestroyAPIView):
 
     def perform_destroy(self, instance):
         #print(instance)
-        if instance.is_staff or instance.is_superuser:
+        if instance.is_superuser:
             #print('Im super user or staff user')
             raise PermissionDenied("Staff members cannot delete staff users or super users.")
         else:
@@ -95,7 +95,7 @@ class TaskUpdate(generics.RetrieveUpdateAPIView):
     #permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return m.Task.objects.filter(project=self.kwargs['pk'])
+        return m.Task.objects.filter(id=self.kwargs['pk'])
 
 
 class StatusList(generics.ListAPIView):

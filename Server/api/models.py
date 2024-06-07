@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 
 
 class TeamsName(models.Model):
@@ -63,4 +64,3 @@ class ListTeams(models.Model):
 
     def __str__(self):
         return self.team_id
-
