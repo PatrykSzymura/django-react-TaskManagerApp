@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { FaCog } from "react-icons/fa";
-import { FaWrench } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { getProject, getPriorities, getTeams, getStatus } from "../utils/dataFeches";
 import axiosInstance from "../utils/axiosInstance";
 import Modal from "../components/Modal";
 import EditProjectForm from "./forms/EditProjectForm";
-import CreateTask from "./forms/CreateTask";
 import TaskList from './Tasks'
 import AddTaskForm from "./forms/AddTaskForm";
+import EditTaskForm from "./forms/EditTaskForm";
 
 const ProjectDetail = () => {
     const [project, setProject] = useState(null);
