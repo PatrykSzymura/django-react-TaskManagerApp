@@ -23,7 +23,6 @@ import getGroupsFromToken from './utils/axiosInstance';
 import { CreateProject } from './pages/NewFrorms';
 import ProjectDetail from './pages/ProjectDetail';
 import EditProjectForm from './pages/forms/EditProjectForm';
-import CreateTask from "./pages/forms/CreateTask";
 import AddTaskForm from './pages/forms/AddTaskForm.jsx';
 import PasswordChangeForm from './pages/forms/PasswordChangeForm.jsx';
 import { getIq } from './utils/dataFeches.js';
@@ -65,7 +64,6 @@ function App() {
           }
 
             <Route path="/projects/:project_id/edit" element={<EditProjectForm/>} />
-            <Route path="/projects/:project_id/CreateTask" element={<CreateTask/>} />
           </Route>
          <Route path='*' element={<Navigate to = '/'/>}/>
         </Routes>
