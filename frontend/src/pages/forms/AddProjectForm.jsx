@@ -11,18 +11,17 @@ export const AddProjectForm = () => {
     const [selectedPriority, setSelectedPriority] = useState("");
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-
     const [teamsData, setTeamsData] = useState([]);
     const [priorityData, setPriData] = useState([]);
-
     const [formData, setFormData] = useState({
         project_name: "",
-        team: "",
-        description: "",
-        status: 6,
-        priority: "",
         date_start: "",
-        date_end: ""
+        date_end: "",
+        description: "",
+        team: "",
+        priority: "",
+        status: 1,
+        
     });
 
     const handleMinDateChange = (e) => {
