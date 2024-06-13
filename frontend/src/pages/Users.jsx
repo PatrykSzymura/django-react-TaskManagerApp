@@ -75,7 +75,7 @@ const UserList = () => {
                     {users.map(user => (
                         <tr key={user.username}>
                             <td>{user.username}</td>
-                            <td>{user.first_name}</td>
+                            <td>{user.last_name}</td>
                             <td>
                                 <button className="btn btn-info text-2xl mr-2" onClick={() => openModal(user)}>
                                     <FaCog />
